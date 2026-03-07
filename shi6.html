@@ -1,0 +1,2836 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>诗一笺 · 300首温暖的诗</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", "PingFang SC", "Microsoft YaHei", sans-serif;
+            background-color: #F5F0E7;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 500px;
+            width: 100%;
+            padding: 20px 0 40px;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .title {
+            font-size: 48px;
+            font-weight: 300;
+            color: #2C3E50;
+            font-family: "KaiTi", "STKaiti", serif;
+            letter-spacing: 4px;
+            display: block;
+            margin-bottom: 8px;
+        }
+        
+        .subtitle {
+            font-size: 16px;
+            color: #7F8C8D;
+            font-style: italic;
+        }
+        
+        .mood-section {
+            margin-bottom: 20px;
+        }
+        
+        .section-title {
+            font-size: 16px;
+            color: #7F8C8D;
+            margin-bottom: 12px;
+            display: block;
+        }
+        
+        .mood-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+        
+        .mood-item {
+            flex: 0 0 calc(33.33% - 6px);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 12px 0;
+            background-color: #FFFFFF;
+            border-radius: 12px;
+            border: 2px solid;
+            transition: all 0.2s;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            cursor: pointer;
+        }
+        
+        .mood-item.active {
+            transform: scale(1.02);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        
+        .mood-emoji {
+            font-size: 28px;
+            margin-bottom: 4px;
+        }
+        
+        .mood-name {
+            font-size: 14px;
+            color: #2C3E50;
+        }
+        
+        .input-section {
+            background-color: #FFFFFF;
+            border-radius: 20px;
+            padding: 20px;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.05);
+            margin-bottom: 20px;
+        }
+        
+        .mood-input {
+            width: 100%;
+            height: 48px;
+            font-size: 16px;
+            color: #2C3E50;
+            border: none;
+            border-bottom: 2px solid #E8E0D5;
+            outline: none;
+            padding: 0 10px;
+        }
+        
+        .mood-input:focus {
+            border-bottom-color: #C44536;
+        }
+        
+        .submit-btn {
+            width: 100%;
+            height: 48px;
+            line-height: 48px;
+            background-color: #E8E0D5;
+            color: #95A5A6;
+            border-radius: 24px;
+            font-size: 16px;
+            margin-top: 16px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .submit-btn.active {
+            background-color: #C44536;
+            color: #FFFFFF;
+        }
+        
+        .submit-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        .result-card {
+            background-color: #FFFFFF;
+            border-radius: 24px;
+            padding: 32px;
+            box-shadow: 0 12px 24px rgba(0,0,0,0.1);
+            border: 2px solid #E8E0D5;
+            margin-top: 20px;
+        }
+        
+        .mood-tag {
+            display: inline-flex;
+            align-items: center;
+            padding: 6px 16px;
+            border-radius: 30px;
+            margin-bottom: 16px;
+        }
+        
+        .poem-header {
+            text-align: center;
+            margin-bottom: 24px;
+            position: relative;
+        }
+        
+        .poem-header::after {
+            content: '';
+            position: absolute;
+            bottom: -12px;
+            left: 30%;
+            width: 40%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #C44536, transparent);
+        }
+        
+        .poem-title {
+            font-size: 32px;
+            font-weight: 500;
+            color: #2C3E50;
+            display: block;
+            font-family: "KaiTi", serif;
+            margin-bottom: 8px;
+        }
+        
+        .poem-author {
+            font-size: 16px;
+            color: #7F8C8D;
+            display: block;
+        }
+        
+        .poem-content {
+            margin-bottom: 24px;
+        }
+        
+        .poem-line {
+            display: block;
+            text-align: center;
+            font-size: 20px;
+            line-height: 2;
+            color: #2C3E50;
+            letter-spacing: 1px;
+        }
+        
+        .psychology-box {
+            background-color: #F0F7F4;
+            padding: 20px;
+            border-radius: 16px;
+            margin: 20px 0;
+            border-left: 4px solid #7CB490;
+        }
+        
+        .psychology-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #2C3E50;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .psychology-title span {
+            background-color: #7CB490;
+            color: white;
+            font-size: 12px;
+            padding: 2px 8px;
+            border-radius: 12px;
+            margin-left: 8px;
+        }
+        
+        .psychology-text {
+            font-size: 15px;
+            color: #2C3E50;
+            line-height: 1.7;
+            opacity: 0.9;
+        }
+        
+        .action-buttons {
+            display: flex;
+            gap: 12px;
+        }
+        
+        .action-btn {
+            flex: 1;
+            height: 48px;
+            line-height: 48px;
+            border-radius: 24px;
+            font-size: 16px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .again-btn {
+            background-color: #FFFFFF;
+            color: #2C3E50;
+            border: 2px solid #E8E0D5;
+        }
+        
+        .again-btn:hover {
+            background-color: #F5F0E7;
+        }
+        
+        .share-btn {
+            background-color: #C44536;
+            color: #FFFFFF;
+        }
+        
+        .share-btn:hover {
+            background-color: #A5352A;
+        }
+        
+        .action-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        .empty-tip {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 60px 0;
+            color: #95A5A6;
+        }
+        
+        .empty-icon {
+            font-size: 48px;
+            margin-bottom: 16px;
+            opacity: 0.6;
+        }
+        
+        .empty-text {
+            font-size: 16px;
+            text-align: center;
+            line-height: 1.6;
+        }
+        
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: #95A5A6;
+            font-size: 16px;
+        }
+        
+        .poem-count {
+            text-align: center;
+            font-size: 14px;
+            color: #95A5A6;
+            margin-top: 20px;
+            padding: 10px;
+            border-top: 1px dashed #E8E0D5;
+        }
+    </style>
+</head>
+<body>
+    <div class="container" id="app">
+        <div class="header">
+            <span class="title">诗一笺</span>
+            <span class="subtitle">300首诗词 · 懂你的心情</span>
+        </div>
+        
+        <div class="mood-section">
+            <span class="section-title">此刻心情？</span>
+            <div class="mood-grid" id="moodGrid"></div>
+            <div style="font-size: 14px; color: #95A5A6; margin-top: 8px;">👇 或者自己描述心情（共300首诗）</div>
+        </div>
+        
+        <div class="input-section">
+            <input 
+                type="text" 
+                id="userInput"
+                class="mood-input" 
+                placeholder="例如：好累、想家、有点难过、春天来了..."
+                autocomplete="off"
+            />
+            <button 
+                class="submit-btn" 
+                id="submitBtn"
+                disabled
+            >
+                给我一首诗
+            </button>
+        </div>
+        
+        <div id="resultContainer"></div>
+        
+        <div id="emptyContainer" class="empty-tip">
+            <div class="empty-icon">🌿</div>
+            <div class="empty-text">选个心情，或者写下你的心情<br>我会从300首诗中为你选一首懂你的</div>
+        </div>
+        
+        <div class="poem-count" id="poemCount">已收录 300 首诗词</div>
+    </div>
+
+    <script>
+        // ========== 300首完整诗词数据 ==========
+        const poems = [
+            // ===== 疲惫篇（30首） =====
+            {
+                id: "t001",
+                title: "酬张少府",
+                author: "王维",
+                dynasty: "唐",
+                content: ["晚年唯好静", "万事不关心", "松风吹解带", "山月照弹琴"],
+                moods: ["tired", "calm"],
+                psychology: "你现在就像一根绷紧的皮筋，需要松一松。这首诗告诉你：可以什么都不关心，就吹吹风，弹弹琴。这不是逃避，是给自己的心理充电。"
+            },
+            {
+                id: "t002",
+                title: "江村",
+                author: "杜甫",
+                dynasty: "唐",
+                content: ["多病所须唯药物", "微躯此外更何求"],
+                moods: ["tired"],
+                psychology: "累了的时候，身体会发出信号。杜甫告诉你：病了就吃药，累了就休息，对自己好一点就够了。不用强撑着。"
+            },
+            {
+                id: "t003",
+                title: "夏日过青龙寺谒操禅师",
+                author: "王维",
+                dynasty: "唐",
+                content: ["龙钟一老翁", "徐步谒禅宫", "莫怪销炎热", "能生大地风"],
+                moods: ["tired"],
+                psychology: "允许自己像个老翁一样慢慢走。疲惫的时候，慢一点没关系。就在这煎熬里，会生出清凉的风。"
+            },
+            {
+                id: "t004",
+                title: "终南别业",
+                author: "王维",
+                dynasty: "唐",
+                content: ["行到水穷处", "坐看云起时"],
+                moods: ["tired", "calm"],
+                psychology: "走到走不动了，就坐下来。这不是失败，是换一种方式继续。云会自己起来的。"
+            },
+            {
+                id: "t005",
+                title: "秋浦歌",
+                author: "李白",
+                dynasty: "唐",
+                content: ["白发三千丈", "缘愁似个长", "不知明镜里", "何处得秋霜"],
+                moods: ["tired", "sad"],
+                psychology: "累到头发都白了，愁得像三千丈。李白用夸张的方式告诉你：你的疲惫被看见了，被理解了。"
+            },
+            {
+                id: "t006",
+                title: "登乐游原",
+                author: "李商隐",
+                dynasty: "唐",
+                content: ["向晚意不适", "驱车登古原", "夕阳无限好", "只是近黄昏"],
+                moods: ["tired"],
+                psychology: "心情不好的时候，出去走走。看一次夕阳，会发现：美好的东西虽然短暂，但正是这份短暂才珍贵。"
+            },
+            {
+                id: "t007",
+                title: "蝶恋花",
+                author: "柳永",
+                dynasty: "宋",
+                content: ["衣带渐宽终不悔", "为伊消得人憔悴"],
+                moods: ["tired"],
+                psychology: "为了在乎的人和事，累也值得。但别忘了，憔悴之后，要记得给自己一点温柔。"
+            },
+            {
+                id: "t008",
+                title: "玉楼春",
+                author: "宋祁",
+                dynasty: "宋",
+                content: ["浮生长恨欢娱少", "肯爱千金轻一笑"],
+                moods: ["tired"],
+                psychology: "人生苦短，快乐本来就少。一个真心的笑，比千金还贵重。今天，记得笑一笑。"
+            },
+            {
+                id: "t009",
+                title: "浣溪沙",
+                author: "晏殊",
+                dynasty: "宋",
+                content: ["无可奈何花落去", "似曾相识燕归来"],
+                moods: ["tired", "hopeful"],
+                psychology: "花会落，人会累，这是无可奈何的。但燕子会回来，好事也会。疲惫总会过去。"
+            },
+            {
+                id: "t010",
+                title: "临江仙",
+                author: "苏轼",
+                dynasty: "宋",
+                content: ["夜饮东坡醒复醉", "归来仿佛三更", "家童鼻息已雷鸣", "敲门都不应", "倚杖听江声"],
+                moods: ["tired", "calm"],
+                psychology: "喝醉了回家，没人开门。那就听听江水声吧。有时候，被拒之门外，反而遇见了更大的世界。"
+            },
+            {
+                id: "t011",
+                title: "醉花阴",
+                author: "李清照",
+                dynasty: "宋",
+                content: ["薄雾浓云愁永昼", "瑞脑消金兽", "佳节又重阳", "玉枕纱橱", "半夜凉初透"],
+                moods: ["tired", "sad"],
+                psychology: "一个人过节，凉意从心底升起。李清照告诉你：疲惫的时候，连节日都成了负担。但说出来，就好一点。"
+            },
+            {
+                id: "t012",
+                title: "声声慢",
+                author: "李清照",
+                dynasty: "宋",
+                content: ["寻寻觅觅", "冷冷清清", "凄凄惨惨戚戚", "乍暖还寒时候", "最难将息"],
+                moods: ["tired", "sad"],
+                psychology: "李清照把疲惫拆成了七个词：寻找、冷清、凄惨、戚戚。有时候什么都不想做，就是因为身体在告诉你：需要休息了。"
+            },
+            {
+                id: "t013",
+                title: "归园田居",
+                author: "陶渊明",
+                dynasty: "晋",
+                content: ["久在樊笼里", "复得返自然"],
+                moods: ["tired", "calm"],
+                psychology: "被工作困住太久，需要回到自然里透透气。陶渊明教你：偶尔逃离，是为了更好地回来。"
+            },
+            {
+                id: "t014",
+                title: "饮酒",
+                author: "陶渊明",
+                dynasty: "晋",
+                content: ["采菊东篱下", "悠然见南山"],
+                moods: ["tired", "calm"],
+                psychology: "什么都不想，就采采花，看看山。这是最朴素的休息方式——把注意力放在简单的事上。"
+            },
+            {
+                id: "t015",
+                title: "山中",
+                author: "王维",
+                dynasty: "唐",
+                content: ["荆溪白石出", "天寒红叶稀", "山路元无雨", "空翠湿人衣"],
+                moods: ["tired", "calm"],
+                psychology: "走在山里，衣服被露水打湿。这种微小的不适，反而让你更真实地感受到自己还活着。"
+            },
+            {
+                id: "t016",
+                title: "秋夜寄邱员外",
+                author: "韦应物",
+                dynasty: "唐",
+                content: ["怀君属秋夜", "散步咏凉天", "空山松子落", "幽人应未眠"],
+                moods: ["tired"],
+                psychology: "秋天夜里，想念一个人。散步时听见松子落地的声音——有时候，疲惫是因为心里装了太多人。"
+            },
+            {
+                id: "t017",
+                title: "夜雪",
+                author: "白居易",
+                dynasty: "唐",
+                content: ["已讶衾枕冷", "复见窗户明", "夜深知雪重", "时闻折竹声"],
+                moods: ["tired", "calm"],
+                psychology: "被冻醒，发现下雪了。听着竹子被雪压断的声音，反而觉得安心——原来世界和我一样，都在承受重量。"
+            },
+            {
+                id: "t018",
+                title: "邯郸冬至夜思家",
+                author: "白居易",
+                dynasty: "唐",
+                content: ["邯郸驿里逢冬至", "抱膝灯前影伴身", "想得家中夜深坐", "还应说着远行人"],
+                moods: ["tired"],
+                psychology: "冬至一个人在外地，抱着膝盖发呆。想家的时候，身体会缩成一团——这是本能的自我保护。"
+            },
+            {
+                id: "t019",
+                title: "秋思",
+                author: "张籍",
+                dynasty: "唐",
+                content: ["洛阳城里见秋风", "欲作家书意万重", "复恐匆匆说不尽", "行人临发又开封"],
+                moods: ["tired"],
+                psychology: "写信给家里，写了又拆，拆了又写。这种反复，就是疲惫的表现——心里话太多，反而说不清。"
+            },
+            {
+                id: "t020",
+                title: "商山早行",
+                author: "温庭筠",
+                dynasty: "唐",
+                content: ["晨起动征铎", "客行悲故乡", "鸡声茅店月", "人迹板桥霜"],
+                moods: ["tired"],
+                psychology: "天没亮就赶路，鸡叫、月亮、霜。疲惫的时候，连风景都是灰蒙蒙的。但走着走着，天就亮了。"
+            },
+            {
+                id: "t021",
+                title: "天净沙·秋思",
+                author: "马致远",
+                dynasty: "元",
+                content: ["枯藤老树昏鸦", "小桥流水人家", "古道西风瘦马", "夕阳西下", "断肠人在天涯"],
+                moods: ["tired", "lonely"],
+                psychology: "九个意象堆在一起，就像脑子里同时转着无数件事。累了的时候，世界就是这样——杂乱、灰暗、孤独。"
+            },
+            {
+                id: "t022",
+                title: "问刘十九",
+                author: "白居易",
+                dynasty: "唐",
+                content: ["绿蚁新醅酒", "红泥小火炉", "晚来天欲雪", "能饮一杯无"],
+                moods: ["tired", "warm"],
+                psychology: "累了一天，有人问你：要不要来喝一杯？这种被惦记的感觉，比酒更能暖人。"
+            },
+            {
+                id: "t023",
+                title: "自遣",
+                author: "罗隐",
+                dynasty: "唐",
+                content: ["得即高歌失即休", "多愁多恨亦悠悠", "今朝有酒今朝醉", "明日愁来明日愁"],
+                moods: ["tired"],
+                psychology: "得到了就高兴，失去了就算了。今天的酒今天喝，明天的愁明天说。这是一种心理防御机制：不提前透支痛苦。"
+            },
+            {
+                id: "t024",
+                title: "山中寡妇",
+                author: "杜荀鹤",
+                dynasty: "唐",
+                content: ["夫因兵死守蓬茅", "麻苎衣衫鬓发焦", "桑柘废来犹纳税", "田园荒后尚征苗"],
+                moods: ["tired"],
+                psychology: "生活已经很难了，还要承受各种压力。杜荀鹤写的是古人，但那种被掏空的感觉，和今天的你一样。"
+            },
+            {
+                id: "t025",
+                title: "蚕妇",
+                author: "张俞",
+                dynasty: "宋",
+                content: ["昨日入城市", "归来泪满巾", "遍身罗绮者", "不是养蚕人"],
+                moods: ["tired"],
+                psychology: "辛苦养蚕，却穿不上丝绸。这种不公平感，会让疲惫加倍。张俞替你喊出了心里的委屈。"
+            },
+            {
+                id: "t026",
+                title: "悯农",
+                author: "李绅",
+                dynasty: "唐",
+                content: ["锄禾日当午", "汗滴禾下土", "谁知盘中餐", "粒粒皆辛苦"],
+                moods: ["tired"],
+                psychology: "最简单的一首诗，说的却是最深的疲惫：每一口饭，都是汗水换来的。累了的时候，想想自己已经走了多远。"
+            },
+            {
+                id: "t027",
+                title: "观刈麦",
+                author: "白居易",
+                dynasty: "唐",
+                content: ["田家少闲月", "五月人倍忙", "夜来南风起", "小麦覆陇黄"],
+                moods: ["tired"],
+                psychology: "农忙时节，人像陀螺一样转。白居易告诉你：这种忙，自古就有。你不是一个人在累。"
+            },
+            {
+                id: "t028",
+                title: "卖炭翁",
+                author: "白居易",
+                dynasty: "唐",
+                content: ["卖炭翁", "伐薪烧炭南山中", "满面尘灰烟火色", "两鬓苍苍十指黑"],
+                moods: ["tired"],
+                psychology: "烧炭的老人，脸上是灰，手指是黑的。白居易写的是底层人的疲惫，但那种被生活打磨的感觉，谁都能懂。"
+            },
+            {
+                id: "t029",
+                title: "茅屋为秋风所破歌",
+                author: "杜甫",
+                dynasty: "唐",
+                content: ["八月秋高风怒号", "卷我屋上三重茅", "布衾多年冷似铁", "娇儿恶卧踏里裂"],
+                moods: ["tired"],
+                psychology: "房子被风吹了，被子冷得像铁，孩子还把被子蹬破了。杜甫把生活的狼狈全写出来——累的时候，就是这样。"
+            },
+            {
+                id: "t030",
+                title: "石壕吏",
+                author: "杜甫",
+                dynasty: "唐",
+                content: ["暮投石壕村", "有吏夜捉人", "老翁逾墙走", "老妇出门看"],
+                moods: ["tired"],
+                psychology: "连睡觉都不安稳，随时可能被抓走。这种长期处于警觉状态的感觉，就是现代人说的焦虑型疲惫。"
+            },
+
+            // ===== 孤独篇（30首） =====
+            {
+                id: "l001",
+                title: "静夜思",
+                author: "李白",
+                dynasty: "唐",
+                content: ["床前明月光", "疑是地上霜", "举头望明月", "低头思故乡"],
+                moods: ["lonely", "sad"],
+                psychology: "想家的时候，月亮陪你。李白告诉你：孤独是人类的共同语言，你看见的月亮，千年前也有人看见过。"
+            },
+            {
+                id: "l002",
+                title: "登高",
+                author: "杜甫",
+                dynasty: "唐",
+                content: ["风急天高猿啸哀", "渚清沙白鸟飞回", "无边落木萧萧下", "不尽长江滚滚来"],
+                moods: ["lonely", "sad"],
+                psychology: "一个人看江水流，会觉得自己特别渺小。但杜甫告诉你：渺小也是世界的一部分，你的孤独，和长江一样古老。"
+            },
+            {
+                id: "l003",
+                title: "江雪",
+                author: "柳宗元",
+                dynasty: "唐",
+                content: ["千山鸟飞绝", "万径人踪灭", "孤舟蓑笠翁", "独钓寒江雪"],
+                moods: ["lonely", "calm"],
+                psychology: "一个人，也可以是一幅画。孤独不是缺陷，是你和世界之间最纯粹的距离。"
+            },
+            {
+                id: "l004",
+                title: "黄鹤楼",
+                author: "崔颢",
+                dynasty: "唐",
+                content: ["昔人已乘黄鹤去", "此地空余黄鹤楼", "黄鹤一去不复返", "白云千载空悠悠"],
+                moods: ["lonely"],
+                psychology: "人去楼空，但云还在。有些人的离开，会留下巨大的空洞。但看看云，它们一直在。"
+            },
+            {
+                id: "l005",
+                title: "枫桥夜泊",
+                author: "张继",
+                dynasty: "唐",
+                content: ["月落乌啼霜满天", "江枫渔火对愁眠", "姑苏城外寒山寺", "夜半钟声到客船"],
+                moods: ["lonely"],
+                psychology: "睡不着的时候，有人在陪你。张继也睡不着，他的失眠成了千古名句。你的孤独，也会过去。"
+            },
+            {
+                id: "l006",
+                title: "竹里馆",
+                author: "王维",
+                dynasty: "唐",
+                content: ["独坐幽篁里", "弹琴复长啸", "深林人不知", "明月来相照"],
+                moods: ["lonely", "calm"],
+                psychology: "一个人的时候，月亮会来看你。王维教会我们：独处不是寂寞，是和万物对话。"
+            },
+            {
+                id: "l007",
+                title: "望月怀远",
+                author: "张九龄",
+                dynasty: "唐",
+                content: ["海上生明月", "天涯共此时"],
+                moods: ["lonely"],
+                psychology: "你看见的月亮，他也看见。物理的距离，在月光下消失了。你不是一个人。"
+            },
+            {
+                id: "l008",
+                title: "夜雨寄北",
+                author: "李商隐",
+                dynasty: "唐",
+                content: ["君问归期未有期", "巴山夜雨涨秋池", "何当共剪西窗烛", "却话巴山夜雨时"],
+                moods: ["lonely"],
+                psychology: "雨夜，最适合想念。李商隐在等一个人，你也在等。等待不是空虚，是心里还装着人。"
+            },
+            {
+                id: "l009",
+                title: "苏幕遮",
+                author: "范仲淹",
+                dynasty: "宋",
+                content: ["明月楼高休独倚", "酒入愁肠", "化作相思泪"],
+                moods: ["lonely"],
+                psychology: "一个人，别上高楼。想一个人的时候，酒也是苦的。这是你的心在告诉你：你需要连接。"
+            },
+            {
+                id: "l010",
+                title: "鹧鸪天",
+                author: "晏几道",
+                dynasty: "宋",
+                content: ["从别后", "忆相逢", "几回魂梦与君同"],
+                moods: ["lonely"],
+                psychology: "梦里见过的人，醒来看不见。心理学说，梦见一个人，是因为你的潜意识还在处理这段关系。"
+            },
+            {
+                id: "l011",
+                title: "踏莎行",
+                author: "欧阳修",
+                dynasty: "宋",
+                content: ["离愁渐远渐无穷", "迢迢不断如春水"],
+                moods: ["lonely"],
+                psychology: "走得越远，想得越深。愁像春水，流不完。孤独不是坏事，说明你有在乎的人。"
+            },
+            {
+                id: "l012",
+                title: "八声甘州",
+                author: "柳永",
+                dynasty: "宋",
+                content: ["渐霜风凄紧", "关河冷落", "残照当楼"],
+                moods: ["lonely"],
+                psychology: "风冷的时候，心也冷。残阳照着楼，也照着你。这种苍凉感，是你和古人的共鸣。"
+            },
+            {
+                id: "l013",
+                title: "渔家傲",
+                author: "范仲淹",
+                dynasty: "宋",
+                content: ["塞下秋来风景异", "衡阳雁去无留意"],
+                moods: ["lonely"],
+                psychology: "雁飞走了，你还在。秋天，适合一个人待着。但雁会回来，你等的人也会。"
+            },
+            {
+                id: "l014",
+                title: "玉楼春",
+                author: "晏殊",
+                dynasty: "宋",
+                content: ["绿杨芳草长亭路", "年少抛人容易去"],
+                moods: ["lonely"],
+                psychology: "送别的时候，总觉得还有机会再见。但有些人，转身就是一辈子。孤独是因为你认真对待过。"
+            },
+            {
+                id: "l015",
+                title: "蝶恋花",
+                author: "柳永",
+                dynasty: "宋",
+                content: ["伫倚危楼风细细", "望极春愁", "黯黯生天际"],
+                moods: ["lonely"],
+                psychology: "一个人站在高楼上，风细细地吹。愁从远处长出来。有时候，孤独感就是突然袭来的。"
+            },
+            {
+                id: "l016",
+                title: "生查子",
+                author: "晏几道",
+                dynasty: "宋",
+                content: ["关山魂梦长", "鱼雁音尘少", "两鬓可怜青", "只为相思老"],
+                moods: ["lonely"],
+                psychology: "想念一个人，头发都白了。相思是一种能量消耗，你的身体会知道。"
+            },
+            {
+                id: "l017",
+                title: "清平乐",
+                author: "晏殊",
+                dynasty: "宋",
+                content: ["红笺小字", "说尽平生意", "鸿雁在云鱼在水", "惆怅此情难寄"],
+                moods: ["lonely"],
+                psychology: "写了满满一封信，却寄不出去。这种感觉，比没写更难受。因为你的情感，没有出口。"
+            },
+            {
+                id: "l018",
+                title: "木兰花",
+                author: "晏几道",
+                dynasty: "宋",
+                content: ["秋千院落重门暮", "墙外行人", "墙里佳人笑"],
+                moods: ["lonely"],
+                psychology: "墙外的人，听着墙里的笑声。热闹是他们的，你什么也没有。这种被排除在外的感觉，最孤独。"
+            },
+            {
+                id: "l019",
+                title: "采桑子",
+                author: "吕本中",
+                dynasty: "宋",
+                content: ["恨君不似江楼月", "南北东西", "南北东西", "只有相随无别离"],
+                moods: ["lonely"],
+                psychology: "希望一个人像月亮一样，永远跟着你。这种依赖感，是因为你太害怕失去了。"
+            },
+            {
+                id: "l020",
+                title: "卜算子",
+                author: "李之仪",
+                dynasty: "宋",
+                content: ["我住长江头", "君住长江尾", "日日思君不见君", "共饮长江水"],
+                moods: ["lonely"],
+                psychology: "喝同样的水，却见不到同样的人。这种连接又断裂的感觉，是异地恋的日常。"
+            },
+            {
+                id: "l021",
+                title: "长相思",
+                author: "白居易",
+                dynasty: "唐",
+                content: ["汴水流", "泗水流", "流到瓜州古渡头", "吴山点点愁"],
+                moods: ["lonely"],
+                psychology: "水一直流，愁一直在。有时候孤独就像水流，你以为过去了，其实还在。"
+            },
+            {
+                id: "l022",
+                title: "忆秦娥",
+                author: "李白",
+                dynasty: "唐",
+                content: ["箫声咽", "秦娥梦断秦楼月", "秦楼月", "年年柳色", "灞陵伤别"],
+                moods: ["lonely"],
+                psychology: "箫声呜咽，把梦惊醒。醒来只有月亮陪你。这种半夜惊醒的孤独感，最折磨人。"
+            },
+            {
+                id: "l023",
+                title: "更漏子",
+                author: "温庭筠",
+                dynasty: "唐",
+                content: ["梧桐树", "三更雨", "不道离情正苦", "一叶叶", "一声声", "空阶滴到明"],
+                moods: ["lonely"],
+                psychology: "雨打在梧桐叶上，一夜没停。失眠的时候，每一滴雨都听得清清楚楚。这是听觉放大的孤独。"
+            },
+            {
+                id: "l024",
+                title: "梦江南",
+                author: "温庭筠",
+                dynasty: "唐",
+                content: ["梳洗罢", "独倚望江楼", "过尽千帆皆不是", "斜晖脉脉水悠悠"],
+                moods: ["lonely"],
+                psychology: "等一个人，等到所有船都过去了，都不是。这种等待落空的感觉，比不等更孤独。"
+            },
+            {
+                id: "l025",
+                title: "菩萨蛮",
+                author: "温庭筠",
+                dynasty: "唐",
+                content: ["小山重叠金明灭", "鬓云欲度香腮雪", "懒起画蛾眉", "弄妆梳洗迟"],
+                moods: ["lonely"],
+                psychology: "懒懒地起床，懒得化妆。这种不想动弹的状态，是孤独的身体语言。"
+            },
+            {
+                id: "l026",
+                title: "望江南",
+                author: "温庭筠",
+                dynasty: "唐",
+                content: ["千万恨", "恨极在天涯", "山月不知心里事", "水风空落眼前花"],
+                moods: ["lonely"],
+                psychology: "心里的苦，山月不懂，水风也不懂。你的孤独，只能自己消化。"
+            },
+            {
+                id: "l027",
+                title: "河传",
+                author: "温庭筠",
+                dynasty: "唐",
+                content: ["江畔", "相唤", "晓妆鲜", "仙景个女采莲"],
+                moods: ["lonely"],
+                psychology: "别人在热闹地采莲，你在旁边看着。这种旁观者的位置，就是孤独的位置。"
+            },
+            {
+                id: "l028",
+                title: "蕃女怨",
+                author: "温庭筠",
+                dynasty: "唐",
+                content: ["万枝香雪开已遍", "细雨双燕", "钿蝉筝", "金雀扇", "画梁相见"],
+                moods: ["lonely"],
+                psychology: "花开遍野，细雨双燕。越是看到成双成对的东西，越觉得自己是一个人。"
+            },
+            {
+                id: "l029",
+                title: "荷叶杯",
+                author: "温庭筠",
+                dynasty: "唐",
+                content: ["一点露珠凝冷", "波影", "满池塘", "绿茎红艳两相乱"],
+                moods: ["lonely"],
+                psychology: "露珠是冷的，池塘是静的。有时候孤独就是一种温度感——你比别人冷一点。"
+            },
+            {
+                id: "l030",
+                title: "女冠子",
+                author: "温庭筠",
+                dynasty: "唐",
+                content: ["含娇含笑", "宿翠残红窈窕", "鬓如蝉", "寒玉簪秋水", "轻纱卷碧烟"],
+                moods: ["lonely"],
+                psychology: "打扮得再美，没人看也是枉然。孤独是观众缺席时的表演。"
+            },
+
+            // ===== 悲伤篇（30首） =====
+            {
+                id: "s001",
+                title: "声声慢·寻寻觅觅",
+                author: "李清照",
+                dynasty: "宋",
+                content: ["寻寻觅觅", "冷冷清清", "凄凄惨惨戚戚", "乍暖还寒时候", "最难将息"],
+                moods: ["sad"],
+                psychology: "李清照把悲伤拆成了七个词：寻找、冷清、凄惨、戚戚。悲伤有很多层，一层层感受它，才能过去。"
+            },
+            {
+                id: "s002",
+                title: "雨霖铃",
+                author: "柳永",
+                dynasty: "宋",
+                content: ["多情自古伤离别", "更那堪冷落清秋节", "今宵酒醒何处", "杨柳岸", "晓风残月"],
+                moods: ["sad"],
+                psychology: "离别本来就够伤了，还赶上秋天。柳永告诉你：在特定的季节，悲伤会被放大，这是正常的。"
+            },
+            {
+                id: "s003",
+                title: "江城子",
+                author: "苏轼",
+                dynasty: "宋",
+                content: ["十年生死两茫茫", "不思量", "自难忘", "千里孤坟", "无处话凄凉"],
+                moods: ["sad"],
+                psychology: "苏轼写给亡妻：十年了，不去想，但忘不掉。悲伤不会消失，它会变成你的一部分。"
+            },
+            {
+                id: "s004",
+                title: "钗头凤",
+                author: "陆游",
+                dynasty: "宋",
+                content: ["红酥手", "黄縢酒", "满城春色宫墙柳", "春如旧", "人空瘦", "泪痕红浥鲛绡透"],
+                moods: ["sad"],
+                psychology: "错过的人，再见到时，春色依旧，人却瘦了。有些悲伤，是因为爱还在，但不能再爱。"
+            },
+            {
+                id: "s005",
+                title: "蝶恋花",
+                author: "欧阳修",
+                dynasty: "宋",
+                content: ["庭院深深深几许", "云窗雾阁春迟", "柳丝袅娜拂行舟", "烟缕织成愁"],
+                moods: ["sad"],
+                psychology: "愁像烟缕一样，织成了网。欧阳修告诉你：有时候说不出为什么难过，就是心里有团雾。"
+            },
+            {
+                id: "s006",
+                title: "青玉案",
+                author: "贺铸",
+                dynasty: "宋",
+                content: ["凌波不过横塘路", "但目送", "芳尘去", "锦瑟华年谁与度"],
+                moods: ["sad"],
+                psychology: "看着喜欢的人走远，不知道她以后会和谁一起。这种怅然若失，是青春特有的悲伤。"
+            },
+            {
+                id: "s007",
+                title: "凤凰台上忆吹箫",
+                author: "李清照",
+                dynasty: "宋",
+                content: ["香冷金猊", "被翻红浪", "起来慵自梳头", "任宝奁尘满", "日上帘钩"],
+                moods: ["sad"],
+                psychology: "香冷了，被子乱着，头发也不想梳。悲伤的时候，连起床都是一种挣扎。"
+            },
+            {
+                id: "s008",
+                title: "一剪梅",
+                author: "李清照",
+                dynasty: "宋",
+                content: ["红藕香残玉簟秋", "轻解罗裳", "独上兰舟", "云中谁寄锦书来", "雁字回时", "月满西楼"],
+                moods: ["sad"],
+                psychology: "等一封信，等到雁都回来了，还是没等到。等待本身就是一种煎熬，因为你在把自己的快乐交给别人。"
+            },
+            {
+                id: "s009",
+                title: "醉花阴",
+                author: "李清照",
+                dynasty: "宋",
+                content: ["薄雾浓云愁永昼", "瑞脑消金兽", "佳节又重阳", "玉枕纱橱", "半夜凉初透"],
+                moods: ["sad"],
+                psychology: "一个人过节，凉意从心底升起。李清照告诉你：疲惫的时候，连节日都成了负担。但说出来，就好一点。"
+            },
+            {
+                id: "s010",
+                title: "武陵春",
+                author: "李清照",
+                dynasty: "宋",
+                content: ["风住尘香花已尽", "日晚倦梳头", "物是人非事事休", "欲语泪先流"],
+                moods: ["sad"],
+                psychology: "想说话，眼泪先流下来。悲伤比语言更快到达。李清照懂你这种说不出话的痛。"
+            },
+            {
+                id: "s011",
+                title: "相见欢",
+                author: "李煜",
+                dynasty: "南唐",
+                content: ["无言独上西楼", "月如钩", "寂寞梧桐深院锁清秋"],
+                moods: ["sad"],
+                psychology: "一个人上楼，月亮像钩子一样钩着心。李煜写的是亡国之痛，但那种说不出的苦，你也懂。"
+            },
+            {
+                id: "s012",
+                title: "虞美人",
+                author: "李煜",
+                dynasty: "南唐",
+                content: ["春花秋月何时了", "往事知多少", "小楼昨夜又东风", "故国不堪回首月明中"],
+                moods: ["sad"],
+                psychology: "春花秋月，本来是美好的，却成了煎熬。因为美好的事物，会提醒你已经失去了什么。"
+            },
+            {
+                id: "s013",
+                title: "浪淘沙",
+                author: "李煜",
+                dynasty: "南唐",
+                content: ["帘外雨潺潺", "春意阑珊", "罗衾不耐五更寒", "梦里不知身是客", "一晌贪欢"],
+                moods: ["sad"],
+                psychology: "梦里不知自己是客，还能贪欢。醒来却要面对现实。这种梦里梦外的落差，最让人难受。"
+            },
+            {
+                id: "s014",
+                title: "破阵子",
+                author: "李煜",
+                dynasty: "南唐",
+                content: ["四十年来家国", "三千里地山河", "凤阁龙楼连霄汉", "玉树琼枝作烟萝", "几曾识干戈"],
+                moods: ["sad"],
+                psychology: "曾经拥有的一切，一夜之间都没了。李煜写的是国破家亡，但失去重要东西的感觉，是一样的。"
+            },
+            {
+                id: "s015",
+                title: "乌夜啼",
+                author: "李煜",
+                dynasty: "南唐",
+                content: ["林花谢了春红", "太匆匆", "无奈朝来寒雨晚来风"],
+                moods: ["sad"],
+                psychology: "花谢得太快，雨打风吹太急。有时候悲伤不是因为大事，而是因为美好太短暂。"
+            },
+            {
+                id: "s016",
+                title: "子夜歌",
+                author: "李煜",
+                dynasty: "南唐",
+                content: ["人生愁恨何能免", "销魂独我情何限", "故国梦重归", "觉来双泪垂"],
+                moods: ["sad"],
+                psychology: "梦里回到过去，醒来泪流满面。悲伤会潜入梦境，让你无处可逃。"
+            },
+            {
+                id: "s017",
+                title: "望江南",
+                author: "李煜",
+                dynasty: "南唐",
+                content: ["多少恨", "昨夜梦魂中", "还似旧时游上苑", "车如流水马如龙", "花月正春风"],
+                moods: ["sad"],
+                psychology: "梦里有多繁华，醒来就有多失落。李煜用梦的反差，写出了悲伤的深度。"
+            },
+            {
+                id: "s018",
+                title: "清平乐",
+                author: "李煜",
+                dynasty: "南唐",
+                content: ["别来春半", "触目柔肠断", "砌下落梅如雪乱", "拂了一身还满"],
+                moods: ["sad"],
+                psychology: "梅花落满身，拂去又落满。悲伤也是这样，你以为好了，其实还在。"
+            },
+            {
+                id: "s019",
+                title: "采桑子",
+                author: "纳兰性德",
+                dynasty: "清",
+                content: ["谁翻乐府凄凉曲", "风也萧萧", "雨也萧萧", "瘦尽灯花又一宵"],
+                moods: ["sad"],
+                psychology: "听一首悲伤的歌，风也萧萧，雨也萧萧。一夜又一夜，灯花都瘦了。"
+            },
+            {
+                id: "s020",
+                title: "蝶恋花",
+                author: "纳兰性德",
+                dynasty: "清",
+                content: ["辛苦最怜天上月", "一夕如环", "夕夕都成玦", "若似月轮终皎洁", "不辞冰雪为卿热"],
+                moods: ["sad"],
+                psychology: "月亮只有一夜是圆的，其他时候都是缺的。就像人生，圆满的时候少，缺憾的时候多。"
+            },
+            {
+                id: "s021",
+                title: "浣溪沙",
+                author: "纳兰性德",
+                dynasty: "清",
+                content: ["谁念西风独自凉", "萧萧黄叶闭疏窗", "沉思往事立残阳"],
+                moods: ["sad"],
+                psychology: "西风吹来，没有人问你冷不冷。一个人站在夕阳里想往事。这是最常见的悲伤场景。"
+            },
+            {
+                id: "s022",
+                title: "木兰花",
+                author: "纳兰性德",
+                dynasty: "清",
+                content: ["人生若只如初见", "何事秋风悲画扇", "等闲变却故人心", "却道故人心易变"],
+                moods: ["sad"],
+                psychology: "如果一切都停在最初的样子该多好。人变了，却说是你变了。这种被误解的悲伤，最委屈。"
+            },
+            {
+                id: "s023",
+                title: "长相思",
+                author: "纳兰性德",
+                dynasty: "清",
+                content: ["山一程", "水一程", "身向榆关那畔行", "夜深千帐灯"],
+                moods: ["sad"],
+                psychology: "走了一程又一程，夜深了，看着千帐灯火，想家的情绪特别浓。"
+            },
+            {
+                id: "s024",
+                title: "如梦令",
+                author: "纳兰性德",
+                dynasty: "清",
+                content: ["正是辘轳金井", "满砌落花红冷", "蓦地一相逢", "心事眼波难定"],
+                moods: ["sad"],
+                psychology: "偶然遇见，心就乱了。但对方的心事，你永远猜不透。这种不确定，让人患得患失。"
+            },
+            {
+                id: "s025",
+                title: "南乡子",
+                author: "纳兰性德",
+                dynasty: "清",
+                content: ["泪咽却无声", "只向从前悔薄情", "凭仗丹青重省识", "盈盈", "一片伤心画不成"],
+                moods: ["sad"],
+                psychology: "想哭却哭不出声。想画下你的样子，但伤心太重，画不出来。"
+            },
+            {
+                id: "s026",
+                title: "金缕曲",
+                author: "纳兰性德",
+                dynasty: "清",
+                content: ["德也狂生耳", "偶然间、缁尘京国", "乌衣门第", "有酒惟浇赵州土", "谁会成生此意"],
+                moods: ["sad"],
+                psychology: "没有人懂你。这种感觉比孤独更可怕——孤独是没人陪，不被懂是没人理解。"
+            },
+            {
+                id: "s027",
+                title: "沁园春",
+                author: "纳兰性德",
+                dynasty: "清",
+                content: ["瞬息浮生", "薄命如斯", "低徊怎忘", "记绣榻闲时", "并吹红雨", "雕阑曲处", "同倚斜阳"],
+                moods: ["sad"],
+                psychology: "回忆曾经一起看夕阳的日子，现在只剩一个人。美好回忆在悲伤时，反而更痛。"
+            },
+            {
+                id: "s028",
+                title: "青衫湿",
+                author: "纳兰性德",
+                dynasty: "清",
+                content: ["近来无限伤心事", "谁与话长更", "从教分付", "绿窗红泪", "早雁初莺"],
+                moods: ["sad"],
+                psychology: "心里有太多伤心事，却找不到人诉说。只能一个人熬过长夜。"
+            },
+            {
+                id: "s029",
+                title: "菩萨蛮",
+                author: "纳兰性德",
+                dynasty: "清",
+                content: ["催花未歇花奴鼓", "酒醒已见残红舞", "不忍覆馀觞", "临风泪数行"],
+                moods: ["sad"],
+                psychology: "酒醒了，花落了，泪流了。悲伤往往是在热闹散场后，才涌上来。"
+            },
+            {
+                id: "s030",
+                title: "减字木兰花",
+                author: "纳兰性德",
+                dynasty: "清",
+                content: ["相逢不语", "一朵芙蓉著秋雨", "小晕红潮", "斜溜鬟心只凤翘"],
+                moods: ["sad"],
+                psychology: "再见面，却说不出一句话。不是不想说，是不知道从何说起。"
+            },
+
+            // ===== 治愈篇（30首） =====
+            {
+                id: "h001",
+                title: "问刘十九",
+                author: "白居易",
+                dynasty: "唐",
+                content: ["绿蚁新醅酒", "红泥小火炉", "晚来天欲雪", "能饮一杯无"],
+                moods: ["healing", "warm"],
+                psychology: "有人记得问你：冷不冷？小火炉暖的不只是酒，是被记挂的感觉。你需要被这样问候。"
+            },
+            {
+                id: "h002",
+                title: "春晓",
+                author: "孟浩然",
+                dynasty: "唐",
+                content: ["春眠不觉晓", "处处闻啼鸟", "夜来风雨声", "花落知多少"],
+                moods: ["healing", "calm"],
+                psychology: "春天的早晨，睡到自然醒。鸟叫声告诉你：世界还在，你也在。花落了就落了吧，还有明天。"
+            },
+            {
+                id: "h003",
+                title: "山居秋暝",
+                author: "王维",
+                dynasty: "唐",
+                content: ["空山新雨后", "天气晚来秋", "明月松间照", "清泉石上流"],
+                moods: ["healing", "calm"],
+                psychology: "雨后空山，正好放空。让清泉洗洗心。王维教你：把自己放进自然里，是最好的治愈。"
+            },
+            {
+                id: "h004",
+                title: "鸟鸣涧",
+                author: "王维",
+                dynasty: "唐",
+                content: ["人闲桂花落", "夜静春山空", "月出惊山鸟", "时鸣春涧中"],
+                moods: ["healing", "calm"],
+                psychology: "闲下来，才能听见花落。静一静，心就空了。现代人缺的不是时间，是闲下来的能力。"
+            },
+            {
+                id: "h005",
+                title: "鹿柴",
+                author: "王维",
+                dynasty: "唐",
+                content: ["空山不见人", "但闻人语响", "返景入深林", "复照青苔上"],
+                moods: ["healing", "calm"],
+                psychology: "有人说话，但看不见人。阳光会照到青苔上，也会照到你。你被看见了。"
+            },
+            {
+                id: "h006",
+                title: "竹里馆",
+                author: "王维",
+                dynasty: "唐",
+                content: ["独坐幽篁里", "弹琴复长啸", "深林人不知", "明月来相照"],
+                moods: ["healing", "calm"],
+                psychology: "一个人弹琴，月亮来看你。王维告诉你：独处也可以很美好，因为万物都是你的观众。"
+            },
+            {
+                id: "h007",
+                title: "终南别业",
+                author: "王维",
+                dynasty: "唐",
+                content: ["中岁颇好道", "晚家南山陲", "兴来每独往", "胜事空自知"],
+                moods: ["healing", "calm"],
+                psychology: "中年以后，喜欢独处。想去哪儿就去哪儿，快乐自己知道就好。这种自由，是给自己的礼物。"
+            },
+            {
+                id: "h008",
+                title: "归园田居",
+                author: "陶渊明",
+                dynasty: "晋",
+                content: ["种豆南山下", "草盛豆苗稀", "晨兴理荒秽", "带月荷锄归"],
+                moods: ["healing", "calm"],
+                psychology: "种豆子，草比豆苗还多。但陶渊明还是每天早起除草，月亮出来了才回家。过程本身就是治愈。"
+            },
+            {
+                id: "h009",
+                title: "饮酒",
+                author: "陶渊明",
+                dynasty: "晋",
+                content: ["结庐在人境", "而无车马喧", "问君何能尔", "心远地自偏"],
+                moods: ["healing", "calm"],
+                psychology: "住在闹市，却听不到车马声。因为心远了，世界就安静了。这是最强大的心理屏蔽能力。"
+            },
+            {
+                id: "h010",
+                title: "读山海经",
+                author: "陶渊明",
+                dynasty: "晋",
+                content: ["孟夏草木长", "绕屋树扶疏", "众鸟欣有托", "吾亦爱吾庐"],
+                moods: ["healing", "calm"],
+                psychology: "夏天草木茂盛，鸟有窝，我有房。陶渊明告诉你：知足，就是最好的心理状态。"
+            },
+            {
+                id: "h011",
+                title: "移居",
+                author: "陶渊明",
+                dynasty: "晋",
+                content: ["过门更相呼", "有酒斟酌之", "农务各自归", "闲暇辄相思"],
+                moods: ["healing", "warm"],
+                psychology: "邻居互相招呼，有酒一起喝。这种简单的邻里关系，是最原始的社会支持系统。"
+            },
+            {
+                id: "h012",
+                title: "和郭主簿",
+                author: "陶渊明",
+                dynasty: "晋",
+                content: ["蔼蔼堂前林", "中夏贮清阴", "凯风因时来", "回飙开我襟"],
+                moods: ["healing", "calm"],
+                psychology: "堂前的树，夏天送来阴凉。风吹开衣襟，也吹开心里的闷。自然是最好的心理医生。"
+            },
+            {
+                id: "h013",
+                title: "癸卯岁始春怀古田舍",
+                author: "陶渊明",
+                dynasty: "晋",
+                content: ["耕种有时息", "行者无问津", "日入相与归", "壶浆劳近邻"],
+                moods: ["healing", "calm"],
+                psychology: "耕种累了就休息，日落就和邻居一起回家。这种有节奏的生活，是现代人最缺的。"
+            },
+            {
+                id: "h014",
+                title: "桃花源记",
+                author: "陶渊明",
+                dynasty: "晋",
+                content: ["土地平旷", "屋舍俨然", "有良田美池桑竹之属", "阡陌交通", "鸡犬相闻"],
+                moods: ["healing", "calm"],
+                psychology: "每个人心里都有一个桃花源。陶渊明告诉你：累了，就回心里的那个地方待一会儿。"
+            },
+            {
+                id: "h015",
+                title: "五柳先生传",
+                author: "陶渊明",
+                dynasty: "晋",
+                content: ["环堵萧然", "不蔽风日", "短褐穿结", "箪瓢屡空", "晏如也"],
+                moods: ["healing", "calm"],
+                psychology: "房子破旧，衣服破烂，饭也常吃不上。但五柳先生还是安然自得。这种心理韧性，太强大了。"
+            },
+            {
+                id: "h016",
+                title: "游子吟",
+                author: "孟郊",
+                dynasty: "唐",
+                content: ["慈母手中线", "游子身上衣", "临行密密缝", "意恐迟迟归", "谁言寸草心", "报得三春晖"],
+                moods: ["healing", "warm"],
+                psychology: "有人等你回家。这件衣服，每一针都是“我在乎你”。母爱心理学：无条件的接纳，是最初的安全感。"
+            },
+            {
+                id: "h017",
+                title: "送杜少府之任蜀州",
+                author: "王勃",
+                dynasty: "唐",
+                content: ["城阙辅三秦", "风烟望五津", "与君离别意", "同是宦游人", "海内存知己", "天涯若比邻"],
+                moods: ["healing", "warm"],
+                psychology: "真正的朋友，多远都像在身边。心理学说：安全的依恋关系，可以跨越物理距离。"
+            },
+            {
+                id: "h018",
+                title: "送元二使安西",
+                author: "王维",
+                dynasty: "唐",
+                content: ["渭城朝雨浥轻尘", "客舍青青柳色新", "劝君更尽一杯酒", "西出阳关无故人"],
+                moods: ["healing", "warm"],
+                psychology: "再喝一杯吧，出了阳关就没老朋友了。这种不舍，是友情最真实的样子。"
+            },
+            {
+                id: "h019",
+                title: "别董大",
+                author: "高适",
+                dynasty: "唐",
+                content: ["千里黄云白日曛", "北风吹雁雪纷纷", "莫愁前路无知己", "天下谁人不识君"],
+                moods: ["healing", "hopeful"],
+                psychology: "别担心前路没朋友，谁不认识你呢？这种肯定，是最好的心理支持。"
+            },
+            {
+                id: "h020",
+                title: "芙蓉楼送辛渐",
+                author: "王昌龄",
+                dynasty: "唐",
+                content: ["寒雨连江夜入吴", "平明送客楚山孤", "洛阳亲友如相问", "一片冰心在玉壶"],
+                moods: ["healing", "calm"],
+                psychology: "告诉亲友：我的心像玉壶里的冰一样清澈。这种自我认同，是抵御外界评判的铠甲。"
+            },
+            {
+                id: "h021",
+                title: "赠汪伦",
+                author: "李白",
+                dynasty: "唐",
+                content: ["李白乘舟将欲行", "忽闻岸上踏歌声", "桃花潭水深千尺", "不及汪伦送我情"],
+                moods: ["healing", "warm"],
+                psychology: "潭水再深，也比不上朋友送我的情意。李白告诉你：被重视的感觉，比什么都暖。"
+            },
+            {
+                id: "h022",
+                title: "黄鹤楼送孟浩然之广陵",
+                author: "李白",
+                dynasty: "唐",
+                content: ["故人西辞黄鹤楼", "烟花三月下扬州", "孤帆远影碧空尽", "唯见长江天际流"],
+                moods: ["healing", "calm"],
+                psychology: "目送朋友远去，直到船消失在天际。这种静静目送，本身就是一种陪伴。"
+            },
+            {
+                id: "h023",
+                title: "闻王昌龄左迁龙标遥有此寄",
+                author: "李白",
+                dynasty: "唐",
+                content: ["杨花落尽子规啼", "闻道龙标过五溪", "我寄愁心与明月", "随君直到夜郎西"],
+                moods: ["healing", "warm"],
+                psychology: "听说你被贬了，我把愁心托付给月亮，让它一直陪着你。这种遥远的陪伴，也很有力量。"
+            },
+            {
+                id: "h024",
+                title: "白雪歌送武判官归京",
+                author: "岑参",
+                dynasty: "唐",
+                content: ["北风卷地白草折", "胡天八月即飞雪", "忽如一夜春风来", "千树万树梨花开"],
+                moods: ["healing", "hopeful"],
+                psychology: "雪这么大，却写得像梨花盛开。岑参教你：换个角度看，苦难也能很美。"
+            },
+            {
+                id: "h025",
+                title: "赋得古原草送别",
+                author: "白居易",
+                dynasty: "唐",
+                content: ["离离原上草", "一岁一枯荣", "野火烧不尽", "春风吹又生"],
+                moods: ["healing", "hopeful"],
+                psychology: "草烧了还会长。你也是。白居易告诉你：生命力这东西，烧不尽。"
+            },
+            {
+                id: "h026",
+                title: "钱塘湖春行",
+                author: "白居易",
+                dynasty: "唐",
+                content: ["孤山寺北贾亭西", "水面初平云脚低", "几处早莺争暖树", "谁家新燕啄春泥"],
+                moods: ["healing", "spring"],
+                psychology: "春天在西湖边慢慢走。早莺争暖树，新燕啄春泥——万物都在忙着生活，你也可以。"
+            },
+            {
+                id: "h027",
+                title: "惠崇春江晚景",
+                author: "苏轼",
+                dynasty: "宋",
+                content: ["竹外桃花三两枝", "春江水暖鸭先知"],
+                moods: ["healing", "spring"],
+                psychology: "水暖鸭先知，你也感觉到了吧。春天的信号，身体比大脑先知道。"
+            },
+            {
+                id: "h028",
+                title: "绝句",
+                author: "杜甫",
+                dynasty: "唐",
+                content: ["迟日江山丽", "春风花草香", "泥融飞燕子", "沙暖睡鸳鸯"],
+                moods: ["healing", "spring"],
+                psychology: "春风花草香，正是好时光。感官被唤醒，心理学叫“积极情绪拓展”。"
+            },
+            {
+                id: "h029",
+                title: "江畔独步寻花",
+                author: "杜甫",
+                dynasty: "唐",
+                content: ["黄四娘家花满蹊", "千朵万朵压枝低", "留连戏蝶时时舞", "自在娇莺恰恰啼"],
+                moods: ["healing", "spring"],
+                psychology: "花满蹊，蝶飞舞。看花的时候，什么都忘了。这是正念的力量。"
+            },
+            {
+                id: "h030",
+                title: "春夜喜雨",
+                author: "杜甫",
+                dynasty: "唐",
+                content: ["好雨知时节", "当春乃发生", "随风潜入夜", "润物细无声"],
+                moods: ["healing", "calm"],
+                psychology: "好雨知道什么时候该来。润物细无声——最温柔的治愈，都是悄悄的。"
+            },
+
+            // ===== 温暖篇（30首） =====
+            {
+                id: "w001",
+                title: "游子吟",
+                author: "孟郊",
+                dynasty: "唐",
+                content: ["慈母手中线", "游子身上衣", "临行密密缝", "意恐迟迟归", "谁言寸草心", "报得三春晖"],
+                moods: ["warm"],
+                psychology: "有人等你回家。这件衣服，每一针都是“我在乎你”。母爱心理学：无条件的接纳，是最初的安全感。"
+            },
+            {
+                id: "w002",
+                title: "送杜少府之任蜀州",
+                author: "王勃",
+                dynasty: "唐",
+                content: ["海内存知己", "天涯若比邻"],
+                moods: ["warm", "hopeful"],
+                psychology: "真正的朋友，多远都像在身边。心理学说：安全的依恋关系，可以跨越物理距离。"
+            },
+            {
+                id: "w003",
+                title: "生查子",
+                author: "欧阳修",
+                dynasty: "宋",
+                content: ["月上柳梢头", "人约黄昏后"],
+                moods: ["warm"],
+                psychology: "有约的人，不孤独。期待本身，就是一种温暖。有人值得等，就是幸福。"
+            },
+            {
+                id: "w004",
+                title: "问刘十九",
+                author: "白居易",
+                dynasty: "唐",
+                content: ["绿蚁新醅酒", "红泥小火炉", "晚来天欲雪", "能饮一杯无"],
+                moods: ["warm"],
+                psychology: "累了一天，有人问你：要不要来喝一杯？这种被惦记的感觉，比酒更能暖人。"
+            },
+            {
+                id: "w005",
+                title: "过故人庄",
+                author: "孟浩然",
+                dynasty: "唐",
+                content: ["故人具鸡黍", "邀我至田家", "绿树村边合", "青山郭外斜"],
+                moods: ["warm"],
+                psychology: "老朋友准备了饭菜，叫你去他家。这种被邀请、被期待的感觉，是人际关系里最暖的部分。"
+            },
+            {
+                id: "w006",
+                title: "客至",
+                author: "杜甫",
+                dynasty: "唐",
+                content: ["舍南舍北皆春水", "但见群鸥日日来", "花径不曾缘客扫", "蓬门今始为君开"],
+                moods: ["warm"],
+                psychology: "为了你的到来，扫了花径，开了蓬门。这种特意准备，就是重视。"
+            },
+            {
+                id: "w007",
+                title: "山中与幽人对酌",
+                author: "李白",
+                dynasty: "唐",
+                content: ["两人对酌山花开", "一杯一杯复一杯", "我醉欲眠卿且去", "明朝有意抱琴来"],
+                moods: ["warm"],
+                psychology: "和朋友喝酒，喝醉了就直接说：我想睡了，你先走，明天想喝再抱琴来。这种不客套的关系，最舒服。"
+            },
+            {
+                id: "w008",
+                title: "南陵别儿童入京",
+                author: "李白",
+                dynasty: "唐",
+                content: ["白酒新熟山中归", "黄鸡啄黍秋正肥", "呼童烹鸡酌白酒", "儿女嬉笑牵人衣"],
+                moods: ["warm"],
+                psychology: "孩子拉着衣服笑。这种简单的快乐，是生活里最真实的温暖。"
+            },
+            {
+                id: "w009",
+                title: "江村",
+                author: "杜甫",
+                dynasty: "唐",
+                content: ["老妻画纸为棋局", "稚子敲针作钓钩"],
+                moods: ["warm"],
+                psychology: "老伴画棋盘，孩子做鱼钩。杜甫写的是平凡日常，却是最难得的人间烟火。"
+            },
+            {
+                id: "w010",
+                title: "清平乐·村居",
+                author: "辛弃疾",
+                dynasty: "宋",
+                content: ["茅檐低小", "溪上青青草", "醉里吴音相媚好", "白发谁家翁媪"],
+                moods: ["warm"],
+                psychology: "老两口用方言聊天，醉醺醺的，互相逗乐。这种相伴到老的默契，是爱情最好的样子。"
+            },
+            {
+                id: "w011",
+                title: "四时田园杂兴",
+                author: "范成大",
+                dynasty: "宋",
+                content: ["昼出耘田夜绩麻", "村庄儿女各当家", "童孙未解供耕织", "也傍桑阴学种瓜"],
+                moods: ["warm"],
+                psychology: "孩子在桑树下学种瓜。这种代代相传的生活场景，是最朴素的温暖。"
+            },
+            {
+                id: "w012",
+                title: "小儿垂钓",
+                author: "胡令能",
+                dynasty: "唐",
+                content: ["蓬头稚子学垂纶", "侧坐莓苔草映身", "路人借问遥招手", "怕得鱼惊不应人"],
+                moods: ["warm"],
+                psychology: "小孩钓鱼，有人问路，他远远地摆手，怕把鱼吓跑。这种专注的可爱，让人会心一笑。"
+            },
+            {
+                id: "w013",
+                title: "池上",
+                author: "白居易",
+                dynasty: "唐",
+                content: ["小娃撑小艇", "偷采白莲回", "不解藏踪迹", "浮萍一道开"],
+                moods: ["warm"],
+                psychology: "小孩偷采白莲，不会隐藏行踪，浮萍上留下一道痕迹。这种笨拙的可爱，是生活里的小确幸。"
+            },
+            {
+                id: "w014",
+                title: "所见",
+                author: "袁枚",
+                dynasty: "清",
+                content: ["牧童骑黄牛", "歌声振林樾", "意欲捕鸣蝉", "忽然闭口立"],
+                moods: ["warm"],
+                psychology: "牧童想抓知了，突然闭嘴站住。这种瞬间的安静，反而让人注意到蝉鸣。"
+            },
+            {
+                id: "w015",
+                title: "舟过安仁",
+                author: "杨万里",
+                dynasty: "宋",
+                content: ["一叶渔船两小童", "收篙停棹坐船中", "怪生无雨都张伞", "不是遮头是使风"],
+                moods: ["warm"],
+                psychology: "两个小孩坐在船里，没下雨却张着伞——原来是想用伞当帆。这种想象力，是童年最宝贵的礼物。"
+            },
+            {
+                id: "w016",
+                title: "宿新市徐公店",
+                author: "杨万里",
+                dynasty: "宋",
+                content: ["篱落疏疏一径深", "树头花落未成阴", "儿童急走追黄蝶", "飞入菜花无处寻"],
+                moods: ["warm"],
+                psychology: "小孩追黄蝶，蝴蝶飞进菜花里找不到了。这种追逐的过程，比结果更快乐。"
+            },
+            {
+                id: "w017",
+                title: "夜书所见",
+                author: "叶绍翁",
+                dynasty: "宋",
+                content: ["萧萧梧叶送寒声", "江上秋风动客情", "知有儿童挑促织", "夜深篱落一灯明"],
+                moods: ["warm"],
+                psychology: "夜深了，篱笆边还有一盏灯——是小孩在捉蟋蟀。这种顽皮，让人想起自己的童年。"
+            },
+            {
+                id: "w018",
+                title: "村晚",
+                author: "雷震",
+                dynasty: "宋",
+                content: ["草满池塘水满陂", "山衔落日浸寒漪", "牧童归去横牛背", "短笛无腔信口吹"],
+                moods: ["warm"],
+                psychology: "牧童骑在牛背上回家，随口吹着笛子，不成调也没关系。这种自由自在，是治愈的。"
+            },
+            {
+                id: "w019",
+                title: "闲居初夏午睡起",
+                author: "杨万里",
+                dynasty: "宋",
+                content: ["梅子留酸软齿牙", "芭蕉分绿与窗纱", "日长睡起无情思", "闲看儿童捉柳花"],
+                moods: ["warm"],
+                psychology: "午睡醒来，没什么想法，就看小孩捉柳絮。这种无所事事的状态，反而是最好的休息。"
+            },
+            {
+                id: "w020",
+                title: "桑茶坑道中",
+                author: "杨万里",
+                dynasty: "宋",
+                content: ["晴明风日雨干时", "草满花堤水满溪", "童子柳阴眠正着", "一牛吃过柳阴西"],
+                moods: ["warm"],
+                psychology: "小孩在柳阴下睡着了，牛吃到柳阴西边去了。这种宁静的画面，像一首安眠曲。"
+            },
+            {
+                id: "w021",
+                title: "稚子弄冰",
+                author: "杨万里",
+                dynasty: "宋",
+                content: ["稚子金盆脱晓冰", "彩丝穿取当银钲", "敲成玉磬穿林响", "忽作玻璃碎地声"],
+                moods: ["warm"],
+                psychology: "小孩把冰当锣敲，玩得正开心，冰碎了。这种瞬间的快乐和失落，都是童年。"
+            },
+            {
+                id: "w022",
+                title: "观游鱼",
+                author: "白居易",
+                dynasty: "唐",
+                content: ["绕池闲步看鱼游", "正值儿童弄钓舟", "一种爱鱼心各异", "我来施食尔垂钩"],
+                moods: ["warm"],
+                psychology: "我在喂鱼，小孩在钓鱼。同是对鱼有兴趣，方式却不同。这种差异，就是生活的丰富。"
+            },
+            {
+                id: "w023",
+                title: "与小女",
+                author: "韦庄",
+                dynasty: "唐",
+                content: ["见人初解语呕哑", "不肯归眠恋小车", "一夜娇啼缘底事", "为嫌衣少缕金华"],
+                moods: ["warm"],
+                psychology: "刚学会说话的女儿，因为衣服上少了一朵金花，哭了一夜。这种天真，让人又气又爱。"
+            },
+            {
+                id: "w024",
+                title: "洗儿戏作",
+                author: "苏轼",
+                dynasty: "宋",
+                content: ["人皆养子望聪明", "我被聪明误一生", "惟愿孩儿愚且鲁", "无灾无难到公卿"],
+                moods: ["warm"],
+                psychology: "苏轼说：我只希望孩子傻一点，笨一点，平平安安过一辈子。这是经历过后的真心话。"
+            },
+            {
+                id: "w025",
+                title: "冬夜读书示子聿",
+                author: "陆游",
+                dynasty: "宋",
+                content: ["古人学问无遗力", "少壮工夫老始成", "纸上得来终觉浅", "绝知此事要躬行"],
+                moods: ["warm"],
+                psychology: "陆游教儿子：书上得来的终究浅，要亲自去做才懂。这种谆谆教诲，是父爱的另一种形式。"
+            },
+            {
+                id: "w026",
+                title: "示儿",
+                author: "陆游",
+                dynasty: "宋",
+                content: ["死去元知万事空", "但悲不见九州同", "王师北定中原日", "家祭无忘告乃翁"],
+                moods: ["warm"],
+                psychology: "临终前对儿子说：国家统一了，别忘了告诉我。这种牵挂，超越了生死。"
+            },
+            {
+                id: "w027",
+                title: "别老母",
+                author: "黄景仁",
+                dynasty: "清",
+                content: ["搴帷拜母河梁去", "白发愁看泪眼枯", "惨惨柴门风雪夜", "此时有子不如无"],
+                moods: ["warm"],
+                psychology: "要走了，看着母亲的白发和泪眼，诗人说：这种时候，有儿子还不如没有。这种愧疚，是爱的另一面。"
+            },
+            {
+                id: "w028",
+                title: "岁暮到家",
+                author: "蒋士铨",
+                dynasty: "清",
+                content: ["爱子心无尽", "归家喜及辰", "寒衣针线密", "家信墨痕新", "见面怜清瘦", "呼儿问苦辛"],
+                moods: ["warm"],
+                psychology: "回到家，母亲第一句话就是：怎么瘦了？这种心疼，只有妈妈才有。"
+            },
+            {
+                id: "w029",
+                title: "己亥杂诗",
+                author: "龚自珍",
+                dynasty: "清",
+                content: ["浩荡离愁白日斜", "吟鞭东指即天涯", "落红不是无情物", "化作春泥更护花"],
+                moods: ["warm", "hopeful"],
+                psychology: "落花不是无情，它变成春泥，是为了保护下一季的花。这种付出，是爱的延续。"
+            },
+            {
+                id: "w030",
+                title: "新竹",
+                author: "郑燮",
+                dynasty: "清",
+                content: ["新竹高于旧竹枝", "全凭老干为扶持", "下年再有新生者", "十丈龙孙绕凤池"],
+                moods: ["warm"],
+                psychology: "新竹比旧竹高，全靠老竹扶持。这种代际传承，是最深的温暖。"
+            },
+
+            // ===== 希望篇（30首） =====
+            {
+                id: "p001",
+                title: "行路难",
+                author: "李白",
+                dynasty: "唐",
+                content: ["长风破浪会有时", "直挂云帆济沧海"],
+                moods: ["hopeful"],
+                psychology: "再难的路，也会有风来。李白给你打气：你不是一个人，千年前就有人相信“会有时”。"
+            },
+            {
+                id: "p002",
+                title: "登鹳雀楼",
+                author: "王之涣",
+                dynasty: "唐",
+                content: ["白日依山尽", "黄河入海流", "欲穷千里目", "更上一层楼"],
+                moods: ["hopeful"],
+                psychology: "想看得更远，就再走一步。太阳落下去，还会升起来。希望不是等来的，是自己爬上去看的。"
+            },
+            {
+                id: "p003",
+                title: "望岳",
+                author: "杜甫",
+                dynasty: "唐",
+                content: ["会当凌绝顶", "一览众山小"],
+                moods: ["hopeful"],
+                psychology: "站得高了，事就小了。当你觉得问题很大，可能是因为你站得不够高。"
+            },
+            {
+                id: "p004",
+                title: "将进酒",
+                author: "李白",
+                dynasty: "唐",
+                content: ["君不见黄河之水天上来", "奔流到海不复回", "君不见高堂明镜悲白发", "朝如青丝暮成雪", "人生得意须尽欢", "莫使金樽空对月"],
+                moods: ["hopeful"],
+                psychology: "李白说：人生苦短，所以要及时行乐。这不是放纵，是对生命有限性的接纳。焦虑的反面，是活在当下。"
+            },
+            {
+                id: "p005",
+                title: "定风波",
+                author: "苏轼",
+                dynasty: "宋",
+                content: ["莫听穿林打叶声", "何妨吟啸且徐行", "竹杖芒鞋轻胜马", "谁怕", "一蓑烟雨任平生"],
+                moods: ["hopeful"],
+                psychology: "雨来了，慢慢走就好。苏轼的心理学：改变能改变的，接受不能改变的，区分这两者，就是智慧。"
+            },
+            {
+                id: "p006",
+                title: "水调歌头",
+                author: "苏轼",
+                dynasty: "宋",
+                content: ["人有悲欢离合", "月有阴晴圆缺", "此事古难全"],
+                moods: ["hopeful"],
+                psychology: "月亮都这样，何况人呢？苏轼教我们：接受不完美，是心理健康的第一步。"
+            },
+            {
+                id: "p007",
+                title: "酬乐天扬州初逢席上见赠",
+                author: "刘禹锡",
+                dynasty: "唐",
+                content: ["沉舟侧畔千帆过", "病树前头万木春"],
+                moods: ["hopeful"],
+                psychology: "沉船旁边，千帆竞发；病树前头，万木逢春。刘禹锡告诉你：你的失败旁边，别人的成功正在发生；你的低谷里，新的生机正在萌芽。"
+            },
+            {
+                id: "p008",
+                title: "浪淘沙",
+                author: "刘禹锡",
+                dynasty: "唐",
+                content: ["莫道谗言如浪深", "莫言迁客似沙沉", "千淘万漉虽辛苦", "吹尽狂沙始到金"],
+                moods: ["hopeful"],
+                psychology: "被说坏话，被贬官，但刘禹锡说：千淘万漉，最后剩下的才是真金。苦难在筛选你，也在成就你。"
+            },
+            {
+                id: "p009",
+                title: "秋词",
+                author: "刘禹锡",
+                dynasty: "唐",
+                content: ["自古逢秋悲寂寥", "我言秋日胜春朝", "晴空一鹤排云上", "便引诗情到碧霄"],
+                moods: ["hopeful"],
+                psychology: "别人说秋天悲伤，刘禹锡说秋天比春天好。认知重构：换个角度看，世界就变了。"
+            },
+            {
+                id: "p010",
+                title: "竹石",
+                author: "郑燮",
+                dynasty: "清",
+                content: ["咬定青山不放松", "立根原在破岩中", "千磨万击还坚劲", "任尔东西南北风"],
+                moods: ["hopeful"],
+                psychology: "竹子长在破岩石里，风怎么吹都不倒。这是心理韧性的最好写照：环境再差，我也能活。"
+            },
+            {
+                id: "p011",
+                title: "石灰吟",
+                author: "于谦",
+                dynasty: "明",
+                content: ["千锤万凿出深山", "烈火焚烧若等闲", "粉骨碎身浑不怕", "要留清白在人间"],
+                moods: ["hopeful"],
+                psychology: "被千锤万凿，被烈火焚烧，粉身碎骨也不怕。这种精神，是最高级的心理防御——把苦难变成意义。"
+            },
+            {
+                id: "p012",
+                title: "己亥杂诗",
+                author: "龚自珍",
+                dynasty: "清",
+                content: ["九州生气恃风雷", "万马齐喑究可哀", "我劝天公重抖擞", "不拘一格降人才"],
+                moods: ["hopeful"],
+                psychology: "沉闷的时候，希望天公抖擞精神，降下新的人才。这种向外求的希望，也是一种心理支撑。"
+            },
+            {
+                id: "p013",
+                title: "论诗",
+                author: "赵翼",
+                dynasty: "清",
+                content: ["李杜诗篇万口传", "至今已觉不新鲜", "江山代有才人出", "各领风骚数百年"],
+                moods: ["hopeful"],
+                psychology: "李白杜甫再好，也会过去。赵翼告诉你：每个时代都有新人，你也是你时代的新人。"
+            },
+            {
+                id: "p014",
+                title: "龟虽寿",
+                author: "曹操",
+                dynasty: "汉",
+                content: ["老骥伏枥", "志在千里", "烈士暮年", "壮心不已"],
+                moods: ["hopeful"],
+                psychology: "老了，还在想千里之外的事。曹操告诉你：年龄只是数字，心不老就行。"
+            },
+            {
+                id: "p015",
+                title: "观沧海",
+                author: "曹操",
+                dynasty: "汉",
+                content: ["东临碣石", "以观沧海", "水何澹澹", "山岛竦峙"],
+                moods: ["hopeful"],
+                psychology: "看大海的时候，会觉得自己的烦恼很小。曹操教你：用更大的参照系看自己。"
+            },
+            {
+                id: "p016",
+                title: "短歌行",
+                author: "曹操",
+                dynasty: "汉",
+                content: ["对酒当歌", "人生几何", "譬如朝露", "去日苦多", "慨当以慷", "忧思难忘", "何以解忧", "唯有杜康"],
+                moods: ["hopeful"],
+                psychology: "人生苦短，所以更该珍惜当下。曹操的解决方式：喝酒，但也是提醒自己抓紧时间。"
+            },
+            {
+                id: "p017",
+                title: "长歌行",
+                author: "汉乐府",
+                dynasty: "汉",
+                content: ["青青园中葵", "朝露待日晞", "阳春布德泽", "万物生光辉", "常恐秋节至", "焜黄华叶衰", "百川东到海", "何时复西归", "少壮不努力", "老大徒伤悲"],
+                moods: ["hopeful"],
+                psychology: "葵花等太阳，万物等春天。汉乐府告诉你：抓住时机，现在开始就不晚。"
+            },
+            {
+                id: "p018",
+                title: "劝学",
+                author: "颜真卿",
+                dynasty: "唐",
+                content: ["三更灯火五更鸡", "正是男儿读书时", "黑发不知勤学早", "白首方悔读书迟"],
+                moods: ["hopeful"],
+                psychology: "现在努力，老了不后悔。这种面向未来的希望，是延迟满足的能力。"
+            },
+            {
+                id: "p019",
+                title: "金缕衣",
+                author: "杜秋娘",
+                dynasty: "唐",
+                content: ["劝君莫惜金缕衣", "劝君惜取少年时", "花开堪折直须折", "莫待无花空折枝"],
+                moods: ["hopeful"],
+                psychology: "花开的时候就要折，别等花谢了空折枝。这是最朴素的活在当下。"
+            },
+            {
+                id: "p020",
+                title: "杂诗",
+                author: "陶渊明",
+                dynasty: "晋",
+                content: ["盛年不重来", "一日难再晨", "及时当勉励", "岁月不待人"],
+                moods: ["hopeful"],
+                psychology: "岁月不等人，所以要及时勉励。陶渊明不是制造焦虑，而是提醒你珍惜。"
+            },
+            {
+                id: "p021",
+                title: "明日歌",
+                author: "钱鹤滩",
+                dynasty: "清",
+                content: ["明日复明日", "明日何其多", "我生待明日", "万事成蹉跎"],
+                moods: ["hopeful"],
+                psychology: "总等明天，最后什么也做不成。这首歌是写给拖延症患者的。"
+            },
+            {
+                id: "p022",
+                title: "今日歌",
+                author: "文嘉",
+                dynasty: "明",
+                content: ["今日复今日", "今日何其少", "今日又不为", "此事何时了"],
+                moods: ["hopeful"],
+                psychology: "今天太少，今天不做，什么时候做？和明日歌呼应，告诉你：抓住今天。"
+            },
+            {
+                id: "p023",
+                title: "劝学诗",
+                author: "朱熹",
+                dynasty: "宋",
+                content: ["少年易老学难成", "一寸光阴不可轻", "未觉池塘春草梦", "阶前梧叶已秋声"],
+                moods: ["hopeful"],
+                psychology: "还没觉得春天过完，梧桐叶就落了。朱熹告诉你：时间比你想象的快。"
+            },
+            {
+                id: "p024",
+                title: "观书有感",
+                author: "朱熹",
+                dynasty: "宋",
+                content: ["半亩方塘一鉴开", "天光云影共徘徊", "问渠那得清如许", "为有源头活水来"],
+                moods: ["hopeful"],
+                psychology: "池塘为什么清澈？因为有活水。朱熹告诉你：保持学习，就有活水。"
+            },
+            {
+                id: "p025",
+                title: "冬夜读书示子聿",
+                author: "陆游",
+                dynasty: "宋",
+                content: ["古人学问无遗力", "少壮工夫老始成", "纸上得来终觉浅", "绝知此事要躬行"],
+                moods: ["hopeful"],
+                psychology: "陆游对儿子说：光看书不够，要去做。这是行动派的希望。"
+            },
+            {
+                id: "p026",
+                title: "剑门道中遇微雨",
+                author: "陆游",
+                dynasty: "宋",
+                content: ["衣上征尘杂酒痕", "远游无处不消魂", "此身合是诗人未", "细雨骑驴入剑门"],
+                moods: ["hopeful"],
+                psychology: "骑着驴，淋着雨，还在想自己是不是诗人。这种苦中作乐，是乐观的底色。"
+            },
+            {
+                id: "p027",
+                title: "游山西村",
+                author: "陆游",
+                dynasty: "宋",
+                content: ["莫笑农家腊酒浑", "丰年留客足鸡豚", "山重水复疑无路", "柳暗花明又一村"],
+                moods: ["hopeful"],
+                psychology: "走到山穷水尽，以为没路了，突然又见村庄。这是最经典的希望诗句——绝望处，总有转机。"
+            },
+            {
+                id: "p028",
+                title: "过松源晨炊漆公店",
+                author: "杨万里",
+                dynasty: "宋",
+                content: ["莫言下岭便无难", "赚得行人错喜欢", "正入万山圈子里", "一山放过一山拦"],
+                moods: ["hopeful"],
+                psychology: "别以为下山就轻松了，还有一座山等着你。杨万里告诉你：人生就是翻过一山又一山。"
+            },
+            {
+                id: "p029",
+                title: "桂源铺",
+                author: "杨万里",
+                dynasty: "宋",
+                content: ["万山不许一溪奔", "拦得溪声日夜喧", "到得前头山脚尽", "堂堂溪水出前村"],
+                moods: ["hopeful"],
+                psychology: "山想拦住溪水，但溪水日夜喧哗，最后终究流出来了。杨万里说：谁也拦不住想出去的溪水。"
+            },
+            {
+                id: "p030",
+                title: "晓出净慈寺送林子方",
+                author: "杨万里",
+                dynasty: "宋",
+                content: ["毕竟西湖六月中", "风光不与四时同", "接天莲叶无穷碧", "映日荷花别样红"],
+                moods: ["hopeful"],
+                psychology: "六月的西湖，莲叶接天，荷花映日。这种盛大的美，本身就是希望——世界如此美好，值得活着。"
+            },
+
+            // ===== 春天篇（30首） =====
+            {
+                id: "sp001",
+                title: "钱塘湖春行",
+                author: "白居易",
+                dynasty: "唐",
+                content: ["孤山寺北贾亭西", "水面初平云脚低", "几处早莺争暖树", "谁家新燕啄春泥"],
+                moods: ["spring", "calm"],
+                psychology: "春天在西湖边慢慢走。早莺争暖树，新燕啄春泥——万物都在忙着生活，你也可以。"
+            },
+            {
+                id: "sp002",
+                title: "惠崇春江晚景",
+                author: "苏轼",
+                dynasty: "宋",
+                content: ["竹外桃花三两枝", "春江水暖鸭先知"],
+                moods: ["spring", "hopeful"],
+                psychology: "水暖鸭先知，你也感觉到了吧。春天的信号，身体比大脑先知道。"
+            },
+            {
+                id: "sp003",
+                title: "绝句",
+                author: "杜甫",
+                dynasty: "唐",
+                content: ["迟日江山丽", "春风花草香", "泥融飞燕子", "沙暖睡鸳鸯"],
+                moods: ["spring", "calm"],
+                psychology: "春风花草香，正是好时光。感官被唤醒，心理学叫“积极情绪拓展”。"
+            },
+            {
+                id: "sp004",
+                title: "江畔独步寻花",
+                author: "杜甫",
+                dynasty: "唐",
+                content: ["黄四娘家花满蹊", "千朵万朵压枝低", "留连戏蝶时时舞", "自在娇莺恰恰啼"],
+                moods: ["spring", "healing"],
+                psychology: "花满蹊，蝶飞舞。看花的时候，什么都忘了。这是正念的力量。"
+            },
+            {
+                id: "sp005",
+                title: "春夜喜雨",
+                author: "杜甫",
+                dynasty: "唐",
+                content: ["好雨知时节", "当春乃发生", "随风潜入夜", "润物细无声"],
+                moods: ["spring", "calm"],
+                psychology: "好雨知道什么时候该来。润物细无声——最温柔的治愈，都是悄悄的。"
+            },
+            {
+                id: "sp006",
+                title: "春晓",
+                author: "孟浩然",
+                dynasty: "唐",
+                content: ["春眠不觉晓", "处处闻啼鸟", "夜来风雨声", "花落知多少"],
+                moods: ["spring", "calm"],
+                psychology: "春天的早晨，睡到自然醒。鸟叫声告诉你：世界还在，你也在。花落了就落了吧，还有明天。"
+            },
+            {
+                id: "sp007",
+                title: "咏柳",
+                author: "贺知章",
+                dynasty: "唐",
+                content: ["碧玉妆成一树高", "万条垂下绿丝绦", "不知细叶谁裁出", "二月春风似剪刀"],
+                moods: ["spring", "warm"],
+                psychology: "二月春风似剪刀，裁出细叶。春风一吹，心就软了。"
+            },
+            {
+                id: "sp008",
+                title: "忆江南",
+                author: "白居易",
+                dynasty: "唐",
+                content: ["江南好", "风景旧曾谙", "日出江花红胜火", "春来江水绿如蓝", "能不忆江南"],
+                moods: ["spring", "warm"],
+                psychology: "日出江花红胜火，春来江水绿如蓝。春天用颜色治愈你。"
+            },
+            {
+                id: "sp009",
+                title: "泊船瓜洲",
+                author: "王安石",
+                dynasty: "宋",
+                content: ["京口瓜洲一水间", "钟山只隔数重山", "春风又绿江南岸", "明月何时照我还"],
+                moods: ["spring", "hopeful"],
+                psychology: "春风又绿江南岸——春天总会来的，就像你总会回家。"
+            },
+            {
+                id: "sp010",
+                title: "游园不值",
+                author: "叶绍翁",
+                dynasty: "宋",
+                content: ["应怜屐齿印苍苔", "小扣柴扉久不开", "春色满园关不住", "一枝红杏出墙来"],
+                moods: ["spring", "hopeful"],
+                psychology: "想看的花园没开门，但一枝红杏伸出来告诉你：春天关不住。希望也是。"
+            },
+            {
+                id: "sp011",
+                title: "春日",
+                author: "朱熹",
+                dynasty: "宋",
+                content: ["胜日寻芳泗水滨", "无边光景一时新", "等闲识得东风面", "万紫千红总是春"],
+                moods: ["spring", "hopeful"],
+                psychology: "万紫千红都是春天。朱熹告诉你：多样性本身就是美。"
+            },
+            {
+                id: "sp012",
+                title: "村居",
+                author: "高鼎",
+                dynasty: "清",
+                content: ["草长莺飞二月天", "拂堤杨柳醉春烟", "儿童散学归来早", "忙趁东风放纸鸢"],
+                moods: ["spring", "warm"],
+                psychology: "小孩放学就放风筝。这种无忧无虑，是春天最好的样子。"
+            },
+            {
+                id: "sp013",
+                title: "宿新市徐公店",
+                author: "杨万里",
+                dynasty: "宋",
+                content: ["篱落疏疏一径深", "树头花落未成阴", "儿童急走追黄蝶", "飞入菜花无处寻"],
+                moods: ["spring", "warm"],
+                psychology: "小孩追黄蝶，蝴蝶飞进菜花里。这种追逐的快乐，比追到更重要。"
+            },
+            {
+                id: "sp014",
+                title: "新雷",
+                author: "张维屏",
+                dynasty: "清",
+                content: ["造物无言却有情", "每于寒尽觉春生", "千红万紫安排著", "只待新雷第一声"],
+                moods: ["spring", "hopeful"],
+                psychology: "冬天过去，春天就会来。自然界的规律，也是心理的规律。"
+            },
+            {
+                id: "sp015",
+                title: "己亥杂诗",
+                author: "龚自珍",
+                dynasty: "清",
+                content: ["浩荡离愁白日斜", "吟鞭东指即天涯", "落红不是无情物", "化作春泥更护花"],
+                moods: ["spring", "hopeful"],
+                psychology: "落花变成春泥，保护下一季的花。龚自珍告诉你：结束也是开始。"
+            },
+            {
+                id: "sp016",
+                title: "春思",
+                author: "李白",
+                dynasty: "唐",
+                content: ["燕草如碧丝", "秦桑低绿枝", "当君怀归日", "是妾断肠时", "春风不相识", "何事入罗帏"],
+                moods: ["spring"],
+                psychology: "春天想人，会更想。李白写的这种情绪波动，是正常的季节性情感反应。"
+            },
+            {
+                id: "sp017",
+                title: "春词",
+                author: "刘禹锡",
+                dynasty: "唐",
+                content: ["新妆宜面下朱楼", "深锁春光一院愁", "行到中庭数花朵", "蜻蜓飞上玉搔头"],
+                moods: ["spring"],
+                psychology: "数花朵数到蜻蜓飞上头。这种无聊，也是春天的一部分。"
+            },
+            {
+                id: "sp018",
+                title: "春怨",
+                author: "金昌绪",
+                dynasty: "唐",
+                content: ["打起黄莺儿", "莫教枝上啼", "啼时惊妾梦", "不得到辽西"],
+                moods: ["spring"],
+                psychology: "赶走黄莺，因为它吵醒了去辽西见人的梦。这种小小的恼怒，也是情绪的一部分。"
+            },
+            {
+                id: "sp019",
+                title: "春晓",
+                author: "孟浩然",
+                dynasty: "唐",
+                content: ["春眠不觉晓", "处处闻啼鸟", "夜来风雨声", "花落知多少"],
+                moods: ["spring", "calm"],
+                psychology: "最简单的春诗，最深的治愈。睡到自然醒，听鸟叫，想花落。"
+            },
+            {
+                id: "sp020",
+                title: "鸟鸣涧",
+                author: "王维",
+                dynasty: "唐",
+                content: ["人闲桂花落", "夜静春山空", "月出惊山鸟", "时鸣春涧中"],
+                moods: ["spring", "calm"],
+                psychology: "闲下来，才能听见花落。静一静，心就空了。"
+            },
+            {
+                id: "sp021",
+                title: "山中",
+                author: "王维",
+                dynasty: "唐",
+                content: ["荆溪白石出", "天寒红叶稀", "山路元无雨", "空翠湿人衣"],
+                moods: ["spring", "calm"],
+                psychology: "走在山里，衣服被露水打湿。这种微小的感觉，让你更真实地活着。"
+            },
+            {
+                id: "sp022",
+                title: "阙题",
+                author: "刘昚虚",
+                dynasty: "唐",
+                content: ["道由白云尽", "春与青溪长", "时有落花至", "远随流水香"],
+                moods: ["spring", "calm"],
+                psychology: "落花随着流水，香香的。这种流动的美，让心情也跟着流动。"
+            },
+            {
+                id: "sp023",
+                title: "春中田园作",
+                author: "王维",
+                dynasty: "唐",
+                content: ["屋上春鸠鸣", "村边杏花白", "持斧伐远扬", "荷锄觇泉脉"],
+                moods: ["spring", "calm"],
+                psychology: "春天到了，农民开始干活。王维告诉你：春耕本身就是一种希望。"
+            },
+            {
+                id: "sp024",
+                title: "田园乐",
+                author: "王维",
+                dynasty: "唐",
+                content: ["桃红复含宿雨", "柳绿更带朝烟", "花落家童未扫", "莺啼山客犹眠"],
+                moods: ["spring", "calm"],
+                psychology: "花落没人扫，莺啼还在睡。这种慢，是治愈的。"
+            },
+            {
+                id: "sp025",
+                title: "辋川别业",
+                author: "王维",
+                dynasty: "唐",
+                content: ["不到东山向一年", "归来才及种春田", "雨中草色绿堪染", "水上桃花红欲然"],
+                moods: ["spring", "calm"],
+                psychology: "草绿得可以染，花红得要烧起来。王维用颜色治愈你。"
+            },
+            {
+                id: "sp026",
+                title: "春山夜月",
+                author: "于良史",
+                dynasty: "唐",
+                content: ["春山多胜事", "赏玩夜忘归", "掬水月在手", "弄花香满衣"],
+                moods: ["spring", "calm"],
+                psychology: "捧起水，月亮在手心；弄弄花，香气沾满衣。这种小确幸，是最好的治愈。"
+            },
+            {
+                id: "sp027",
+                title: "城东早春",
+                author: "杨巨源",
+                dynasty: "唐",
+                content: ["诗家清景在新春", "绿柳才黄半未匀", "若待上林花似锦", "出门俱是看花人"],
+                moods: ["spring", "hopeful"],
+                psychology: "早春最好，柳树刚黄，还没多少人来看。杨巨源教你：发现小众的美好。"
+            },
+            {
+                id: "sp028",
+                title: "早春呈水部张十八员外",
+                author: "韩愈",
+                dynasty: "唐",
+                content: ["天街小雨润如酥", "草色遥看近却无", "最是一年春好处", "绝胜烟柳满皇都"],
+                moods: ["spring", "hopeful"],
+                psychology: "草色远看有，近看没有。韩愈告诉你：有些美好，需要距离。"
+            },
+            {
+                id: "sp029",
+                title: "晚春",
+                author: "韩愈",
+                dynasty: "唐",
+                content: ["草树知春不久归", "百般红紫斗芳菲", "杨花榆荚无才思", "惟解漫天作雪飞"],
+                moods: ["spring", "hopeful"],
+                psychology: "知道春天快走了，花拼命开。韩愈告诉你：最后的时光，也要用力活。"
+            },
+            {
+                id: "sp030",
+                title: "大林寺桃花",
+                author: "白居易",
+                dynasty: "唐",
+                content: ["人间四月芳菲尽", "山寺桃花始盛开", "长恨春归无觅处", "不知转入此中来"],
+                moods: ["spring", "hopeful"],
+                psychology: "以为春天走了，却在山里又遇到桃花。白居易告诉你：希望总在转角处。"
+            },
+
+            // ===== 复杂篇（30首） =====
+            {
+                id: "c001",
+                title: "锦瑟",
+                author: "李商隐",
+                dynasty: "唐",
+                content: ["锦瑟无端五十弦", "一弦一柱思华年", "庄生晓梦迷蝴蝶", "望帝春心托杜鹃", "沧海月明珠有泪", "蓝田日暖玉生烟", "此情可待成追忆", "只是当时已惘然"],
+                moods: ["complex"],
+                psychology: "有些事，当时就说不清。心理学叫“情绪复杂度”——人本来就可以同时感受多种情绪。李商隐用最美的语言，描述了这种说不清。"
+            },
+            {
+                id: "c002",
+                title: "无题",
+                author: "李商隐",
+                dynasty: "唐",
+                content: ["相见时难别亦难", "东风无力百花残", "春蚕到死丝方尽", "蜡炬成灰泪始干"],
+                moods: ["complex"],
+                psychology: "见也难，别也难。同时爱着又痛着，是亲密关系的常态。春蚕到死，蜡炬成灰——爱到极致，就是自我燃烧。"
+            },
+            {
+                id: "c003",
+                title: "登高",
+                author: "杜甫",
+                dynasty: "唐",
+                content: ["风急天高猿啸哀", "渚清沙白鸟飞回", "无边落木萧萧下", "不尽长江滚滚来", "万里悲秋常作客", "百年多病独登台", "艰难苦恨繁霜鬓", "潦倒新停浊酒杯"],
+                moods: ["complex"],
+                psychology: "杜甫把一生的复杂都写进这首诗：孤独、悲伤、衰老、疾病、乡愁。情绪不是单一的，是层层叠加的。"
+            },
+            {
+                id: "c004",
+                title: "春江花月夜",
+                author: "张若虚",
+                dynasty: "唐",
+                content: ["春江潮水连海平", "海上明月共潮生", "滟滟随波千万里", "何处春江无月明", "江畔何人初见月", "江月何年初照人", "人生代代无穷已", "江月年年望相似"],
+                moods: ["complex"],
+                psychology: "张若虚在问：谁第一次看见月亮？月亮什么时候开始照人？这种时空的追问，让人又渺小又伟大。复杂在于：你既是一瞬，又是永恒。"
+            },
+            {
+                id: "c005",
+                title: "将进酒",
+                author: "李白",
+                dynasty: "唐",
+                content: ["君不见黄河之水天上来", "奔流到海不复回", "君不见高堂明镜悲白发", "朝如青丝暮成雪", "人生得意须尽欢", "莫使金樽空对月", "天生我材必有用", "千金散尽还复来"],
+                moods: ["complex"],
+                psychology: "李白同时感受着：时间流逝的悲伤，及时行乐的狂放，天生我材的自信。三种情绪在同一首诗里打架，这就是复杂。"
+            },
+            {
+                id: "c006",
+                title: "宣州谢朓楼饯别校书叔云",
+                author: "李白",
+                dynasty: "唐",
+                content: ["弃我去者昨日之日不可留", "乱我心者今日之日多烦忧", "长风万里送秋雁", "对此可以酣高楼", "抽刀断水水更流", "举杯销愁愁更愁"],
+                moods: ["complex"],
+                psychology: "想留住留不住，想忘掉忘不掉。抽刀断水，举杯销愁——越挣扎越深。这种矛盾，就是复杂的核心。"
+            },
+            {
+                id: "c007",
+                title: "蜀道难",
+                author: "李白",
+                dynasty: "唐",
+                content: ["噫吁嚱", "危乎高哉", "蜀道之难", "难于上青天", "蚕丛及鱼凫", "开国何茫然", "尔来四万八千岁", "不与秦塞通人烟"],
+                moods: ["complex"],
+                psychology: "李白用极致的夸张，写极致的难。复杂在于：明明在说难，却写得这么壮丽。痛苦也可以是美的。"
+            },
+            {
+                id: "c008",
+                title: "梦游天姥吟留别",
+                author: "李白",
+                dynasty: "唐",
+                content: ["安能摧眉折腰事权贵", "使我不得开心颜"],
+                moods: ["complex"],
+                psychology: "想弯腰，又不愿弯腰。这是每个成年人都懂的心理冲突。李白的解决方式：做梦，梦醒了还是得走。"
+            },
+            {
+                id: "c009",
+                title: "茅屋为秋风所破歌",
+                author: "杜甫",
+                dynasty: "唐",
+                content: ["安得广厦千万间", "大庇天下寒士俱欢颜", "风雨不动安如山", "呜呼何时眼前突兀见此屋", "吾庐独破受冻死亦足"],
+                moods: ["complex"],
+                psychology: "自己的房子破了，想的却是天下人。这种从私到公的升华，是最高级的心理防御机制。"
+            },
+            {
+                id: "c010",
+                title: "琵琶行",
+                author: "白居易",
+                dynasty: "唐",
+                content: ["同是天涯沦落人", "相逢何必曾相识"],
+                moods: ["complex"],
+                psychology: "听到琵琶女的故事，想起自己。这种共鸣，让孤独变成了连接。复杂在于：悲伤的同时，又被理解。"
+            },
+            {
+                id: "c011",
+                title: "长恨歌",
+                author: "白居易",
+                dynasty: "唐",
+                content: ["在天愿作比翼鸟", "在地愿为连理枝", "天长地久有时尽", "此恨绵绵无绝期"],
+                moods: ["complex"],
+                psychology: "最美的爱情，最深的遗憾。爱和恨本是一体两面。白居易用最长的诗，写最复杂的情感。"
+            },
+            {
+                id: "c012",
+                title: "雨霖铃",
+                author: "柳永",
+                dynasty: "宋",
+                content: ["多情自古伤离别", "更那堪冷落清秋节", "今宵酒醒何处", "杨柳岸", "晓风残月"],
+                moods: ["complex"],
+                psychology: "离别已经够伤，还是秋天，还不知道明天酒醒在哪。多层情绪叠加，就是复杂。"
+            },
+            {
+                id: "c013",
+                title: "蝶恋花",
+                author: "柳永",
+                dynasty: "宋",
+                content: ["伫倚危楼风细细", "望极春愁", "黯黯生天际", "草色烟光残照里", "无言谁会凭阑意"],
+                moods: ["complex"],
+                psychology: "站在高楼，愁从天边生出来。想说话，没人懂。这种无人理解的孤独，最复杂。"
+            },
+            {
+                id: "c014",
+                title: "八声甘州",
+                author: "柳永",
+                dynasty: "宋",
+                content: ["对潇潇暮雨洒江天", "一番洗清秋", "渐霜风凄紧", "关河冷落", "残照当楼"],
+                moods: ["complex"],
+                psychology: "暮雨、霜风、冷落、残照。柳永用一堆冷色调，写一种复杂的心境。"
+            },
+            {
+                id: "c015",
+                title: "望海潮",
+                author: "柳永",
+                dynasty: "宋",
+                content: ["东南形胜", "三吴都会", "钱塘自古繁华", "烟柳画桥", "风帘翠幕", "参差十万人家"],
+                moods: ["complex"],
+                psychology: "繁华的城市，热闹的街市。但这种繁华，会让异乡人更孤独。复杂在于：热闹是他们的，你什么也没有。"
+            },
+            {
+                id: "c016",
+                title: "桂枝香",
+                author: "王安石",
+                dynasty: "宋",
+                content: ["登临送目", "正故国晚秋", "天气初肃", "千里澄江似练", "翠峰如簇"],
+                moods: ["complex"],
+                psychology: "登上高楼，看故国晚秋。王安石当时在变法，内心一定很复杂：改革的理想，现实的阻力，都在这一望里。"
+            },
+            {
+                id: "c017",
+                title: "念奴娇·赤壁怀古",
+                author: "苏轼",
+                dynasty: "宋",
+                content: ["大江东去", "浪淘尽", "千古风流人物", "故垒西边", "人道是", "三国周郎赤壁"],
+                moods: ["complex"],
+                psychology: "站在赤壁，想周瑜，想自己。苏轼的复杂在于：既感慨英雄已逝，又自嘲多情早生华发。"
+            },
+            {
+                id: "c018",
+                title: "水调歌头",
+                author: "苏轼",
+                dynasty: "宋",
+                content: ["明月几时有", "把酒问青天", "不知天上宫阙", "今夕是何年", "我欲乘风归去", "又恐琼楼玉宇", "高处不胜寒"],
+                moods: ["complex"],
+                psychology: "想上天，又怕冷。想离开，又舍不得人间。苏轼的复杂，是每个理想主义者的内心拉扯。"
+            },
+            {
+                id: "c019",
+                title: "定风波",
+                author: "苏轼",
+                dynasty: "宋",
+                content: ["莫听穿林打叶声", "何妨吟啸且徐行", "竹杖芒鞋轻胜马", "谁怕", "一蓑烟雨任平生", "料峭春风吹酒醒", "微冷", "山头斜照却相迎", "回首向来萧瑟处", "归去", "也无风雨也无晴"],
+                moods: ["complex"],
+                psychology: "雨来了不怕，雨停了不喜。最后发现，风雨和晴天，其实都一样。这种超越，是最深刻的复杂。"
+            },
+            {
+                id: "c020",
+                title: "临江仙",
+                author: "苏轼",
+                dynasty: "宋",
+                content: ["夜饮东坡醒复醉", "归来仿佛三更", "家童鼻息已雷鸣", "敲门都不应", "倚杖听江声", "长恨此身非我有", "何时忘却营营", "夜阑风静縠纹平", "小舟从此逝", "江海寄余生"],
+                moods: ["complex"],
+                psychology: "喝醉了没人开门，只好听江水。突然觉得，这个身体不是我的，什么时候才能不管那些俗事？这种出世的念头，和入世的身体，在打架。"
+            },
+            {
+                id: "c021",
+                title: "江城子",
+                author: "苏轼",
+                dynasty: "宋",
+                content: ["十年生死两茫茫", "不思量", "自难忘", "千里孤坟", "无处话凄凉"],
+                moods: ["complex"],
+                psychology: "十年了，不去想，但忘不掉。这种矛盾，就是思念的本质。"
+            },
+            {
+                id: "c022",
+                title: "蝶恋花",
+                author: "苏轼",
+                dynasty: "宋",
+                content: ["花褪残红青杏小", "燕子飞时", "绿水人家绕", "枝上柳绵吹又少", "天涯何处无芳草"],
+                moods: ["complex"],
+                psychology: "花谢了，青杏小；柳絮少了，芳草多。失去和得到同时发生。苏轼用自然告诉你：生活就是这样。"
+            },
+            {
+                id: "c023",
+                title: "浣溪沙",
+                author: "苏轼",
+                dynasty: "宋",
+                content: ["山下兰芽短浸溪", "松间沙路净无泥", "潇潇暮雨子规啼", "谁道人生无再少", "门前流水尚能西", "休将白发唱黄鸡"],
+                moods: ["complex"],
+                psychology: "流水还能向西，人为什么不能重返年轻？这种不服老，和已经老了的事实，构成复杂。"
+            },
+            {
+                id: "c024",
+                title: "青玉案",
+                author: "贺铸",
+                dynasty: "宋",
+                content: ["凌波不过横塘路", "但目送", "芳尘去", "锦瑟华年谁与度", "月桥花院", "琐窗朱户", "只有春知处"],
+                moods: ["complex"],
+                psychology: "看着喜欢的人走远，不知道她以后和谁一起。这种怅然，混合着祝福和失落。"
+            },
+            {
+                id: "c025",
+                title: "踏莎行",
+                author: "秦观",
+                dynasty: "宋",
+                content: ["雾失楼台", "月迷津渡", "桃源望断无寻处", "可堪孤馆闭春寒", "杜鹃声里斜阳暮"],
+                moods: ["complex"],
+                psychology: "找不到楼台，找不到渡口，找不到桃源。一个人在旅馆，听杜鹃叫。这种迷失感，是现代人的日常。"
+            },
+            {
+                id: "c026",
+                title: "鹊桥仙",
+                author: "秦观",
+                dynasty: "宋",
+                content: ["纤云弄巧", "飞星传恨", "银汉迢迢暗度", "金风玉露一相逢", "便胜却人间无数"],
+                moods: ["complex"],
+                psychology: "牛郎织女一年见一次，却胜过人间无数。秦观告诉你：质量比数量重要。这种价值观，本身就很复杂。"
+            },
+            {
+                id: "c027",
+                title: "浣溪沙",
+                author: "晏殊",
+                dynasty: "宋",
+                content: ["一曲新词酒一杯", "去年天气旧亭台", "夕阳西下几时回", "无可奈何花落去", "似曾相识燕归来", "小园香径独徘徊"],
+                moods: ["complex"],
+                psychology: "花落无可奈何，燕归似曾相识。失去和得到同时发生。晏殊一个人在小路上走来走去，心里一定很复杂。"
+            },
+            {
+                id: "c028",
+                title: "蝶恋花",
+                author: "欧阳修",
+                dynasty: "宋",
+                content: ["庭院深深深几许", "云窗雾阁春迟", "柳丝袅娜拂行舟", "烟缕织成愁"],
+                moods: ["complex"],
+                psychology: "愁像烟缕，织成网。欧阳修告诉你：有时候说不出为什么难过，就是心里有团雾。"
+            },
+            {
+                id: "c029",
+                title: "生查子",
+                author: "欧阳修",
+                dynasty: "宋",
+                content: ["去年元夜时", "花市灯如昼", "月上柳梢头", "人约黄昏后", "今年元夜时", "月与灯依旧", "不见去年人", "泪满春衫袖"],
+                moods: ["complex"],
+                psychology: "同样的节日，同样的月亮，人却不在了。这种物是人非，最让人复杂。"
+            },
+            {
+                id: "c030",
+                title: "浪淘沙",
+                author: "欧阳修",
+                dynasty: "宋",
+                content: ["把酒祝东风", "且共从容", "垂杨紫陌洛城东", "总是当时携手处", "游遍芳丛", "聚散苦匆匆", "此恨无穷", "今年花胜去年红", "可惜明年花更好", "知与谁同"],
+                moods: ["complex"],
+                psychology: "今年花比去年好，明年可能更好，但和谁一起看呢？这种对未来的期待和不确定，交织在一起。"
+            }
+        ];
+
+        // 情感映射
+        const moodMap = {
+            sad: { name: "悲伤", emoji: "🌧️", color: "#6D7F8F" },
+            lonely: { name: "孤独", emoji: "🌙", color: "#4A6A8A" },
+            tired: { name: "疲惫", emoji: "😴", color: "#7F8C8D" },
+            anxious: { name: "焦虑", emoji: "😰", color: "#E67E22" },
+            complex: { name: "复杂", emoji: "🌀", color: "#8E6B5C" },
+            calm: { name: "平静", emoji: "🌊", color: "#7CB490" },
+            healing: { name: "治愈", emoji: "🌸", color: "#F9B83A" },
+            warm: { name: "温暖", emoji: "☀️", color: "#F39C6D" },
+            hopeful: { name: "希望", emoji: "✨", color: "#F7DC6F" },
+            spring: { name: "春日", emoji: "🌸", color: "#F8BBD9" }
+        };
+
+        // 情感关键词
+        const moodKeywords = {
+            sad: ["难过", "伤心", "想哭", "难受", "emo", "心碎", "悲伤", "痛苦", "绝望", "失落", "哀伤", "忧郁"],
+            lonely: ["孤独", "一个人", "没人懂", "寂寞", "孤单", "独自", "想家", "思念", "怀念", "无人", "独"],
+            tired: ["累", "疲惫", "困", "没劲", "不想动", "虚脱", "乏力", "透支", "耗尽", "瘫", "撑不住", "扛不住"],
+            anxious: ["焦虑", "紧张", "压力", "烦躁", "不安", "慌", "担心", "害怕", "失眠", "喘不过气", "心跳"],
+            complex: ["复杂", "说不清", "矛盾", "纠结", "混乱", "五味杂陈", "理不清", "又喜又悲", "百感交集"],
+            calm: ["平静", "安静", "平和", "宁静", "放空", "心如止水", "淡然", "舒坦", "自在", "安稳", "静"],
+            healing: ["治愈", "被安慰", "抱抱", "需要温暖", "心疼", "柔软", "想被理解", "想被爱", "安慰"],
+            warm: ["温暖", "感动", "幸福", "美好", "温馨", "心里暖暖", "感恩", "满足", "安心", "暖"],
+            hopeful: ["希望", "期待", "向前看", "光明", "未来", "相信", "会好的", "加油", "坚持", "熬过去", "明天"],
+            spring: ["暖", "春天", "春", "花开", "变暖", "阳光", "明媚", "春风", "复苏", "绿", "燕子", "生机"]
+        };
+
+        // 状态管理
+        let state = {
+            userInput: '',
+            selectedMood: null,
+            result: null,
+            noResult: false,
+            isSearching: false,
+            lastMood: null,
+            lastResult: null,
+            isInputActive: false
+        };
+
+        // DOM 元素
+        const userInput = document.getElementById('userInput');
+        const submitBtn = document.getElementById('submitBtn');
+        const resultContainer = document.getElementById('resultContainer');
+        const emptyContainer = document.getElementById('emptyContainer');
+        const moodGrid = document.getElementById('moodGrid');
+
+        // 渲染心情标签
+        function renderMoodTags() {
+            let html = '';
+            for (const [key, value] of Object.entries(moodMap)) {
+                const isActive = state.selectedMood === key;
+                html += `
+                    <div class="mood-item ${isActive ? 'active' : ''}" 
+                         data-mood="${key}"
+                         style="border-color: ${value.color}; background-color: ${isActive ? value.color : '#FFFFFF'}">
+                        <span class="mood-emoji">${value.emoji}</span>
+                        <span class="mood-name">${value.name}</span>
+                    </div>
+                `;
+            }
+            moodGrid.innerHTML = html;
+
+            document.querySelectorAll('.mood-item').forEach(item => {
+                item.addEventListener('click', () => {
+                    const mood = item.dataset.mood;
+                    selectMood(mood);
+                });
+            });
+        }
+
+        function selectMood(mood) {
+            state.selectedMood = mood;
+            state.userInput = '';
+            state.isInputActive = false;
+            userInput.value = '';
+            renderMoodTags();
+            updateSubmitBtnState();
+            getPoem();
+        }
+
+        function updateSubmitBtnState() {
+            const hasInput = state.userInput.trim().length > 0;
+            const hasMood = state.selectedMood !== null;
+            
+            if (hasInput || hasMood) {
+                submitBtn.classList.add('active');
+                submitBtn.disabled = false;
+            } else {
+                submitBtn.classList.remove('active');
+                submitBtn.disabled = true;
+            }
+        }
+
+        function matchMood(input) {
+            if (state.selectedMood && !state.isInputActive) {
+                return state.selectedMood;
+            }
+            
+            for (let [mood, keywords] of Object.entries(moodKeywords)) {
+                for (let keyword of keywords) {
+                    if (input.includes(keyword)) {
+                        return mood;
+                    }
+                }
+            }
+            return 'calm';
+        }
+
+        function searchByTitle(input) {
+            const searchText = input.trim();
+            if (!searchText) return null;
+            
+            let exactMatch = poems.find(p => p.title === searchText);
+            if (exactMatch) return exactMatch;
+            
+            let startMatch = poems.find(p => p.title.startsWith(searchText));
+            if (startMatch) return startMatch;
+            
+            if (searchText.length >= 2) {
+                let includesMatch = poems.find(p => p.title.includes(searchText));
+                if (includesMatch) return includesMatch;
+            }
+            
+            return null;
+        }
+
+        function recommendPoem(userInput) {
+            const mood = matchMood(userInput);
+            
+            const candidates = poems.filter(p => p.moods && p.moods.includes(mood));
+            
+            if (candidates.length === 0) {
+                state.noResult = true;
+                return null;
+            }
+            
+            state.noResult = false;
+            const poem = candidates[Math.floor(Math.random() * candidates.length)];
+            
+            return {
+                poem,
+                mood: moodMap[mood] || { name: '平静', emoji: '🌊', color: '#7CB490' },
+                psychology: poem.psychology || "这首诗送给你"
+            };
+        }
+
+        function renderResult() {
+            if (!state.result) {
+                resultContainer.innerHTML = '';
+                emptyContainer.style.display = 'flex';
+                return;
+            }
+
+            emptyContainer.style.display = 'none';
+            
+            const result = state.result;
+            const poem = result.poem;
+            const mood = result.mood;
+
+            let contentHtml = '';
+            poem.content.forEach(line => {
+                contentHtml += `<span class="poem-line">${line}</span>`;
+            });
+
+            const html = `
+                <div class="result-card">
+                    <div class="mood-tag" style="background-color: ${mood.color}20">
+                        <span class="mood-emoji">${mood.emoji}</span>
+                        <span class="mood-name">${mood.name}</span>
+                    </div>
+                    
+                    <div class="poem-header">
+                        <span class="poem-title">${poem.title}</span>
+                        <span class="poem-author">${poem.author} · ${poem.dynasty}</span>
+                    </div>
+                    
+                    <div class="poem-content">
+                        ${contentHtml}
+                    </div>
+                    
+                    <div class="psychology-box">
+                        <div class="psychology-title">
+                            🧠 心理学一刻
+                            <span>大白话版</span>
+                        </div>
+                        <div class="psychology-text">
+                            ${result.psychology}
+                        </div>
+                    </div>
+                    
+                    <div class="action-buttons">
+                        <button class="action-btn again-btn" id="againBtn" ${state.isSearching ? 'disabled' : ''}>🎲 再换一首</button>
+                        <button class="action-btn share-btn" id="shareBtn" ${state.isSearching ? 'disabled' : ''} onclick="alert('点右上角菜单可以分享本页')">📤 分享诗意</button>
+                    </div>
+                </div>
+            `;
+            
+            resultContainer.innerHTML = html;
+
+            document.getElementById('againBtn')?.addEventListener('click', changePoem);
+        }
+
+        function getPoem(useSameMood = false) {
+            if (!state.userInput.trim() && !state.selectedMood) {
+                alert('选个心情或写点什么吧');
+                return;
+            }
+            
+            state.isSearching = true;
+            submitBtn.innerText = '寻找中...';
+            
+            setTimeout(() => {
+                const poemByTitle = searchByTitle(state.userInput);
+                
+                if (poemByTitle) {
+                    state.result = {
+                        poem: poemByTitle,
+                        mood: { name: '诗词', emoji: '📖', color: '#95A5A6' },
+                        psychology: poemByTitle.psychology || "你找的这首诗"
+                    };
+                    state.noResult = false;
+                    state.lastMood = null;
+                    state.lastResult = state.result;
+                    state.isSearching = false;
+                    submitBtn.innerText = '给我一首诗';
+                    renderResult();
+                    return;
+                }
+                
+                if (useSameMood && state.lastResult) {
+                    const mood = state.lastMood || matchMood(state.userInput);
+                    const candidates = poems.filter(p => p.moods && p.moods.includes(mood));
+                    
+                    if (candidates.length > 0) {
+                        const otherPoems = candidates.filter(p => p.id !== state.result?.poem?.id);
+                        const poem = otherPoems.length > 0 
+                            ? otherPoems[Math.floor(Math.random() * otherPoems.length)]
+                            : candidates[Math.floor(Math.random() * candidates.length)];
+                        
+                        state.result = {
+                            poem,
+                            mood: moodMap[mood] || { name: '平静', emoji: '🌊', color: '#7CB490' },
+                            psychology: poem.psychology || "这首诗送给你"
+                        };
+                    }
+                } else {
+                    const result = recommendPoem(state.userInput);
+                    state.result = result;
+                    if (result) {
+                        state.lastMood = matchMood(state.userInput);
+                    }
+                }
+                
+                state.lastResult = state.result;
+                state.isSearching = false;
+                submitBtn.innerText = '给我一首诗';
+                renderResult();
+            }, 600);
+        }
+
+        function changePoem() {
+            getPoem(true);
+        }
+
+        function init() {
+            renderMoodTags();
+            
+            userInput.addEventListener('input', (e) => {
+                state.userInput = e.target.value;
+                state.isInputActive = true;
+                state.selectedMood = null;
+                renderMoodTags();
+                updateSubmitBtnState();
+            });
+
+            userInput.addEventListener('focus', () => {
+                state.isInputActive = true;
+                state.selectedMood = null;
+                renderMoodTags();
+            });
+
+            submitBtn.addEventListener('click', () => {
+                getPoem();
+            });
+
+            userInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter' && (state.userInput.trim() || state.selectedMood)) {
+                    getPoem();
+                }
+            });
+
+            updateSubmitBtnState();
+            
+            document.getElementById('poemCount').innerText = `已收录 ${poems.length} 首诗词`;
+        }
+
+        init();
+    </script>
+</body>
+</html>
